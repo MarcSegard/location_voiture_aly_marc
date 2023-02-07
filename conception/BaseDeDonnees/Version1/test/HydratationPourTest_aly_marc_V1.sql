@@ -20,6 +20,8 @@ values
 ("rouge",45.3,"EW-900-JI",now(),"Superbe voiture rouge",34000,"climatisation et GPS", @id_agence, @id_categorie, @id_carburant, @id_marque);
 SELECT distinct LAST_INSERT_ID() into @id_vehicule FROM vehicule;
 
+insert into image (chemin_image,id_vehicule) values ("./monchemin/image3.jpg", @id_vehicule);
+
 select id_type_paiement into @type_paiement from type_paiement where nom_type_paiement="paypal";
 
 insert into facture (date_facture, montant_facture, id_type_paiement, token_paiement_facture) 
@@ -33,6 +35,11 @@ values
 -- test procedure stockee
 call addVehicule("abis","berline","super98","renault","./mon/chemin/monimage.jpg", "rouge", 45.6,
 "TW-000-XX", now(),"super voirure",65000,"GPS");
+call addVehicule("abis","citadine","diesel","renault","./mon/chemin/monimage2.jpg", "verte", 60,
+"TW-111-XX", now(),"super voirure",5000,"GPS");
+
+-- utilisation de la vue pour voir les infos des véhicules
+select * from liste_vehicule;
 
 
 

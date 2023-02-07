@@ -89,4 +89,14 @@ begin
 end\\
 delimiter ;
 
+-- creation d'une vue pour avoir toutes les informations
+-- concernant un véhicule
+create or replace view liste_vehicule as
+select * from vehicule 
+inner join categorie using(id_categorie)
+inner join carburant using(id_carburant)
+inner join marque using(id_marque)
+inner join image using (id_vehicule)
+inner join agence using (id_agence);
+
 

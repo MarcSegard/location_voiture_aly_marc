@@ -49,7 +49,7 @@ public class Inscription extends JFrame {
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(6, 6, 394, 544);
+		panel.setBounds(6, 6, 394, 340);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -58,7 +58,7 @@ public class Inscription extends JFrame {
 		JLabel lblNewLabel = new JLabel("Connection");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.BOLD | Font.ITALIC, 35));
-		lblNewLabel.setBounds(6, 6, 382, 34);
+		lblNewLabel.setBounds(48, 20, 340, 34);
 		panel.add(lblNewLabel);
 
 		JLabel lblEmail_1 = new JLabel("Email :");
@@ -88,7 +88,6 @@ public class Inscription extends JFrame {
 				if (userlogin != null) {
 					JOptionPane.showMessageDialog(null, "Bonjour " + userlogin.getPrenom() + ", vous êtes connecté",
 							"Super", JOptionPane.INFORMATION_MESSAGE);
-					UserDao.currentUser = userlogin;
 					dispose();
 				} else {
 					JOptionPane.showMessageDialog(null, "Nous n'avez pas de compte", "Oups", JOptionPane.ERROR_MESSAGE);
@@ -101,7 +100,7 @@ public class Inscription extends JFrame {
 		panel.add(btnConnection);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(412, 6, 400, 544);
+		panel_1.setBounds(412, 6, 400, 340);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 
@@ -111,7 +110,7 @@ public class Inscription extends JFrame {
 		panel_1.add(lblNom);
 
 		JLabel lblInscription = new JLabel("Inscription");
-		lblInscription.setBounds(0, 6, 400, 42);
+		lblInscription.setBounds(42, 20, 352, 42);
 		lblInscription.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInscription.setFont(new Font("Lucida Grande", Font.BOLD | Font.ITALIC, 35));
 		panel_1.add(lblInscription);
