@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
@@ -35,21 +34,41 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1920, 1050);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setBounds(100, 100, 1500, 1050);
+		getContentPane().setLayout(null);
 
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		JButton btnNewButton = new JButton("TestLogin");
+		JPanel header = new JPanel();
+		header.setBounds(6, 6, 1488, 95);
+		getContentPane().add(header);
+		header.setLayout(null);
+
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setIcon(new ImageIcon(
+				"/Users/marcsegard/eclipse-workspace/location_voiture_aly_marc/src/assets/icones/login.png"));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Inscription login = new Inscription();
 				login.setVisible(true);
 			}
 		});
-		btnNewButton.setBounds(645, 392, 117, 29);
-		contentPane.add(btnNewButton);
+		btnNewButton.setBounds(1389, 18, 76, 60);
+		header.add(btnNewButton);
+
+		JPanel container = new JPanel();
+		container.setBounds(6, 103, 1488, 785);
+		getContentPane().add(container);
+		container.setLayout(null);
+
+		container.removeAll();
+		AffichagePrincipale affichagePrincipale = new AffichagePrincipale();
+		affichagePrincipale.setBounds(0, 0, 1488, 791);
+		container.add(affichagePrincipale);
+
+		JPanel footer = new JPanel();
+		footer.setBounds(6, 900, 1480, 52);
+		getContentPane().add(footer);
+		footer.setLayout(null);
+		container.repaint();
+		container.revalidate();
 	}
 }

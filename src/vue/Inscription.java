@@ -39,8 +39,8 @@ public class Inscription extends JFrame {
 	 * Create the frame.
 	 */
 	public Inscription() {
-		// UserDao uc1 = new UserDao();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		UserDao uc1 = new UserDao();
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 818, 386);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -52,8 +52,6 @@ public class Inscription extends JFrame {
 		panel.setBounds(6, 6, 394, 340);
 		contentPane.add(panel);
 		panel.setLayout(null);
-
-		UserDao uc1 = new UserDao();
 
 		JLabel lblNewLabel = new JLabel("Connection");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
