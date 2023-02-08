@@ -41,6 +41,8 @@ call addVehicule("abis","citadine","diesel","renault","./mon/chemin/monimage2.jp
 -- utilisation de la vue pour voir les infos des véhicules
 select * from liste_vehicule;
 
-
+-- utilisation de la procedure stockee updateVehicule
+call updateVehicule(6,6,"abis","citadine","diesel","renault","./mon/chemin/update.jpg", "verte", 60,
+"TW-111-XX", now(),"update update",5000,"GPS");
 
 
