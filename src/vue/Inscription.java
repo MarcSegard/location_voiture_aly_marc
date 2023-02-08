@@ -5,7 +5,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.UserDao;
+import controller.VehiculeDao;
 import model.User;
+import model.Vehicule;
 
 //import controller.UserDao;
 //import model.User;
@@ -18,6 +20,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
