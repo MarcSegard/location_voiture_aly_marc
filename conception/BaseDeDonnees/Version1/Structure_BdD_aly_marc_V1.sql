@@ -61,7 +61,7 @@ delimiter ;
 
 -- procedure stockee ajout véhicule
 delimiter \\
-create OR replace procedure addVehicule(
+create OR replace procedure addVehicule(IN 
 in_nom_agence varchar(150),
 in_nom_categorie varchar(50),
 in_nom_carburant varchar(50),
@@ -88,6 +88,47 @@ begin
     insert into image (chemin_image,id_vehicule) values (in_chemin_image,@id_vehicule);
 end\\
 delimiter ;
+
+-- procedure stockee update véhicule
+delimiter \\
+create OR replace procedure updateVehicule(IN 
+in_id_vehicule int,
+in_id_image int,
+in_nom_agence varchar(150),
+in_nom_categorie varchar(50),
+in_nom_carburant varchar(50),
+in_nom_marque varchar(50),
+in_chemin_image varchar(250),
+in_couleur_vehicule varchar(20),
+in_prix_vehicule float,
+in_immatriculation varchar (20),
+in_date_arrivee_vehicule date,
+in_description_vehicule text,
+in_kilometrage_vehicule double,
+in_options_vehicule text)
+begin
+	select id_agence into @id_agence from agence where nom_agence=in_nom_agence;
+	select id_categorie into @id_categorie from categorie where nom_categorie=in_nom_categorie;
+    select id_carburant into @id_carburant from carburant where nom_carburant=in_nom_carburant;
+    select id_marque into @id_marque from marque where nom_marque=in_nom_marque;
+    update vehicule set
+    couleur_vehicule = in_couleur_vehicule,
+    prix_vehicule = in_prix_vehicule,
+    immatriculation_vehicule = in_immatriculation,
+    date_arrivee_vehicule = in_date_arrivee_vehicule,
+    description_vehicule = in_description_vehicule,
+    kilometrage_vehicule = in_kilometrage_vehicule,
+    options_vehicule = in_options_vehicule,
+    id_agence=@id_agence,
+    id_categorie=@id_categorie,
+    id_carburant=@id_carburant,
+    id_marque= @id_marque 
+    where id_vehicule= in_id_vehicule;
+    update image set chemin_image = in_chemin_image where id_image=in_id_image;
+end\\
+delimiter ;
+
+
 
 -- creation d'une vue pour avoir toutes les informations
 -- concernant un véhicule
