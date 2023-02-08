@@ -40,6 +40,16 @@ public class AffichagePrincipale extends JPanel {
 		scrollPane.setViewportView(table);
 
 		String[] categories = { "*", "petite citadine", "citadine", "SUV", "berline", "monospace", "utilitaire" };
+		
+		/******************************************************/
+		/*                 Remarque JComboBox                 */
+		//Le JComboBox demande un type, on pourrait mettre
+		//JComboBox<String> mais windows builder refuse
+		//Donc nous ne pouvons pas mettre de <String>
+		//Ou alors juste avant la liovraison
+		/*****************************************************/
+		
+		
 		JComboBox comboBoxCategorie = new JComboBox(categories);
 		comboBoxCategorie.setBounds(6, 122, 141, 25);
 		add(comboBoxCategorie);
