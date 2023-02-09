@@ -33,6 +33,7 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1500, 1050);
 		getContentPane().setLayout(null);
@@ -43,8 +44,7 @@ public class MainFrame extends JFrame {
 		header.setLayout(null);
 
 		JButton btnNewButton = new JButton("");
-		btnNewButton.setIcon(new ImageIcon(
-				"/Users/marcsegard/eclipse-workspace/location_voiture_aly_marc/src/assets/icones/login.png"));
+		btnNewButton.setIcon(new ImageIcon(MainFrame.class.getResource("/assets/icones/login.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Inscription login = new Inscription();

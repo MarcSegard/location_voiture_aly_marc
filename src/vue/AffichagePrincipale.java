@@ -80,15 +80,13 @@ public class AffichagePrincipale extends JPanel {
 		textSearch.setColumns(10);
 
 		JLabel lblSearch = new JLabel("");
-		lblSearch.setIcon(new ImageIcon(
-				"/Users/marcsegard/eclipse-workspace/location_voiture_aly_marc/src/assets/icones/search.png"));
+		lblSearch.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/icones/search.png")));
 		lblSearch.setBounds(6, 75, 51, 42);
 		add(lblSearch);
 
 		JLabel imageVehicule = new JLabel("");
 		imageVehicule.setHorizontalAlignment(SwingConstants.CENTER);
-		imageVehicule.setIcon(new ImageIcon(
-				"/Users/marcsegard/eclipse-workspace/location_voiture_aly_marc/src/assets/images/petite_citadine/citroen-am_test.png"));
+		imageVehicule.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/images/SUV/BMWiX_M60_electrique.png")));
 		imageVehicule.setBounds(866, 42, 600, 300);
 		add(imageVehicule);
 
