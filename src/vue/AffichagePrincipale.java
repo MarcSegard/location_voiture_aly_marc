@@ -11,9 +11,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
 import controller.UserDao;
 import controller.VehiculeDao;
+import model.Vehicule;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
@@ -41,16 +43,11 @@ public class AffichagePrincipale extends JPanel {
 		scrollPane.setBounds(6, 106, 832, 562);
 		add(scrollPane);
 
-		String headerTable[] = { "Catégorie", "Marque", "modèle", "couleur", "Carburant", "Prix (€/jour)" };
-		Object dataTable[][] = { { "citadine", "Renault", "clio", "rouge", "diesel", "45,5" },
-				{ "monospace", "Peugeot", "3008", "noire", "Super", "24,5" },
-				{ "berline", "Citroën", "C3", "jaune", "électrique", "56" },
-				{ "utilitaire", "Renault", "Kango", "marron", "Hybride", "34,6" } };
 
-		table = new JTable(dataTable, headerTable);
+		table = new JTable();
+		table.setModel(listeVehicule());
 		table.setBackground(UIManager.getColor("Button.select"));
 		table.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
-
 		scrollPane.setViewportView(table);
 
 		/******************************************************/
@@ -162,5 +159,23 @@ public class AffichagePrincipale extends JPanel {
 		btnNewButton.setBounds(1130, 687, 129, 34);
 		add(btnNewButton);
 
+	}
+	
+	public DefaultTableModel listeVehicule() {
+		//Création de la colonne
+		String col [] =  {"Catégorie", "Marque", "modèle", "couleur", "Carburant", "Prix (€/jour)"};
+		DefaultTableModel tableau = new DefaultTableModel(null, col);
+		for (Vehicule vehicule : vehiculeDao.read()) {
+			tableau.addRow(new Object[] {
+					vehicule.getCategorie(),
+					vehicule.getMarque(),
+					vehicule.getModele_vehicule(),
+					vehicule.getCouleur(),
+					vehicule.getCarburant(),
+					vehicule.getPrix()
+			});
+		}
+		return tableau;
+		
 	}
 }
