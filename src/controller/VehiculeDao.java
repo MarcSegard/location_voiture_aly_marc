@@ -47,7 +47,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 	public ArrayList<Vehicule> read() {
 		ArrayList<Vehicule> vehicules = new ArrayList<>();
 		try {
-			sql = connect.prepareStatement("select * from liste_vehicule");
+			sql = connect.prepareStatement("select * from liste_vehicule order by prix_vehicule");
 			rs = sql.executeQuery();
 			Vehicule vehicule;
 
