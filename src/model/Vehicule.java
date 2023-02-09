@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Vehicule {
 
@@ -17,13 +17,14 @@ public class Vehicule {
 	private String carburant;
 	private String marque;
 	private String chemin_image;
+	private String modele_vehicule;
 
 	public Vehicule() {
 	}
 
 	public Vehicule(int id, String couleur, float prix, String immatriculation, Date date_arrivee, String description,
 			double kilometrage, String options, String agence, String categorie, String carburant, String marque,
-			String chemin_image) {
+			 String modele_vehicule , String chemin_image) {
 		super();
 		this.id = id;
 		this.couleur = couleur;
@@ -38,11 +39,12 @@ public class Vehicule {
 		this.carburant = carburant;
 		this.marque = marque;
 		this.chemin_image = chemin_image;
+		this.modele_vehicule=modele_vehicule;
 	}
 
 	public Vehicule(String couleur, float prix, String immatriculation, String description,
 			double kilometrage, String options, String agence, String categorie, String carburant, String marque,
-			String chemin_image) {
+			 String modele_vehicule,String chemin_image) {
 		super();
 		this.couleur = couleur;
 		this.prix = prix;
@@ -55,6 +57,7 @@ public class Vehicule {
 		this.carburant = carburant;
 		this.marque = marque;
 		this.chemin_image = chemin_image;
+		this.modele_vehicule=modele_vehicule;
 	}
 
 	public int getId() {
@@ -161,4 +164,13 @@ public class Vehicule {
 		this.chemin_image = chemin_image;
 	}
 
+	public String getModele_vehicule() {
+		return modele_vehicule;
+	}
+
+	public void setModele_vehicule(String modele_vehicule) {
+		this.modele_vehicule = modele_vehicule;
+	}
+
+	
 }

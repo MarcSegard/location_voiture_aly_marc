@@ -85,3 +85,5 @@ call addVehicule("abis","SUV","diesel","renault","Koléos","/assets/images/SUV/K
 call addVehicule("abis","SUV","électrique","audi","Q4","/assets/images/SUV/Q4e-tron.png", "grise", 81.6,
 "TW-116-YZ", now(),"SUV  spacieux et confortable pour vos ballages en campagne.",15500,"GPS / Android Auto / AppleCar");
 
+call updateVehicule(6,6,"abis","SUV","électrique","audi","Q4 update","/assets/images/SUV/update.png", "grise", 81.6,
+"TW-116-YZ", now(),"SUV  spacieux et confortable pour vos ballages en campagne.",15500,"GPS / Android Auto / AppleCar");
