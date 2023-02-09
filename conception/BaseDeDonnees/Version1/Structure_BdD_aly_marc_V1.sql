@@ -11,7 +11,7 @@ create or replace table agence (id_agence int primary key auto_increment, nom_ag
 adresse_agence varchar (250) not null, ca_agence double not null, SIRET_agence varchar (30) not null);
 
 create or replace table vehicule (id_vehicule int primary key auto_increment, couleur_vehicule varchar(20) not null,
-prix_vehicule float not null, immatriculation_vehicule varchar (20), date_arrivee_vehicule date not null, 
+modele_vehicule varchar(200), prix_vehicule float not null, immatriculation_vehicule varchar (20), date_arrivee_vehicule date not null, 
 description_vehicule text not null, kilometrage_vehicule double not null,
 options_vehicule text not null, id_agence int not null, id_categorie int not null,
 id_carburant int not null, id_marque int not null);
@@ -40,7 +40,7 @@ alter table location add constraint fk_location_client foreign key (id_client) r
 alter table location add constraint fk_location_vehicule foreign key (id_vehicule) references vehicule(id_vehicule);
 alter table location add constraint fk_location_facture foreign key (id_facture) references facture(id_facture);
 
-insert into marque (nom_marque) values ("renault"),("peugeot"),("citroën"),("fiat"),("BMW");
+insert into marque (nom_marque) values ("renault"),("peugeot"),("citroën"),("fiat"),("BMW"),("mercedes"),("audi");
 insert into carburant (nom_carburant) values ("diesel"),("super98"),("super95"),("électrique"),("hybride");
 insert into categorie (nom_categorie) values ("petite citadine"),("citadine"),("SUV"),("berline"),("monospace"),("utilitaire");
 insert into type_paiement (nom_type_paiement) values ("paypal"),("VISA"),("MASTER CARD");
@@ -66,6 +66,7 @@ in_nom_agence varchar(150),
 in_nom_categorie varchar(50),
 in_nom_carburant varchar(50),
 in_nom_marque varchar(50),
+in_modele_vehicule varchar(200),
 in_chemin_image varchar(250),
 in_couleur_vehicule varchar(20),
 in_prix_vehicule float,
@@ -79,9 +80,9 @@ begin
 	select id_categorie into @id_categorie from categorie where nom_categorie=in_nom_categorie;
     select id_carburant into @id_carburant from carburant where nom_carburant=in_nom_carburant;
     select id_marque into @id_marque from marque where nom_marque=in_nom_marque;
-    insert into vehicule (couleur_vehicule, prix_vehicule, immatriculation_vehicule, date_arrivee_vehicule,
+    insert into vehicule (couleur_vehicule, modele_vehicule, prix_vehicule, immatriculation_vehicule, date_arrivee_vehicule,
     description_vehicule, kilometrage_vehicule, options_vehicule, id_agence, id_categorie, id_carburant,id_marque)
-    values (in_couleur_vehicule, in_prix_vehicule, in_immatriculation, in_date_arrivee_vehicule,
+    values (in_couleur_vehicule, in_modele_vehicule, in_prix_vehicule, in_immatriculation, in_date_arrivee_vehicule,
     in_description_vehicule, in_kilometrage_vehicule, in_options_vehicule, @id_agence, @id_categorie, 
     @id_carburant,@id_marque);
     SELECT distinct LAST_INSERT_ID() into @id_vehicule FROM vehicule;
@@ -98,6 +99,7 @@ in_nom_agence varchar(150),
 in_nom_categorie varchar(50),
 in_nom_carburant varchar(50),
 in_nom_marque varchar(50),
+in_modele_vehicule varchar(200),
 in_chemin_image varchar(250),
 in_couleur_vehicule varchar(20),
 in_prix_vehicule float,
@@ -115,6 +117,7 @@ begin
     couleur_vehicule = in_couleur_vehicule,
     prix_vehicule = in_prix_vehicule,
     immatriculation_vehicule = in_immatriculation,
+    modele_vehicule = in_modele_vehicule,
     date_arrivee_vehicule = in_date_arrivee_vehicule,
     description_vehicule = in_description_vehicule,
     kilometrage_vehicule = in_kilometrage_vehicule,
