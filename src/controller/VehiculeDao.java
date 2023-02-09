@@ -57,7 +57,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 						rs.getDate("date_arrivee_vehicule"), rs.getString("description_vehicule"),
 						rs.getDouble("kilometrage_vehicule"), rs.getString("options_vehicule"),
 						rs.getString("nom_agence"), rs.getString("nom_categorie"), rs.getString("nom_carburant"),
-						rs.getString("nom_marque"), rs.getString("modele_vehicule"),rs.getString("chemin_image"));
+						rs.getString("nom_marque"), rs.getString("modele_vehicule"), rs.getString("chemin_image"));
 				vehicules.add(vehicule);
 			}
 			return vehicules;
@@ -66,8 +66,88 @@ public class VehiculeDao implements IDao<Vehicule> {
 		}
 		return null;
 	}
+
+	public ArrayList<String> getMarque() {
+		ArrayList<String> marques = new ArrayList<>();
+		try {
+			sql = connect.prepareStatement("select distinct nom_marque from marque");
+			rs = sql.executeQuery();
+
+			while (rs.next()) {
+				marques.add(rs.getString("nom_marque"));
+			}
+			return marques;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public ArrayList<String> getCategorie() {
+		ArrayList<String> categories = new ArrayList<>();
+		try {
+			sql = connect.prepareStatement("select distinct nom_categorie from categorie");
+			rs = sql.executeQuery();
+
+			while (rs.next()) {
+				categories.add(rs.getString("nom_categorie"));
+			}
+			return categories;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
-	public boolean update(int id_image,Vehicule vehicule) {
+	public ArrayList<String> getCarburant() {
+		ArrayList<String> carburants = new ArrayList<>();
+		try {
+			sql = connect.prepareStatement("select distinct nom_carburant from carburant");
+			rs = sql.executeQuery();
+
+			while (rs.next()) {
+				carburants.add(rs.getString("nom_carburant"));
+			}
+			return carburants;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ArrayList<String> getModele() {
+		ArrayList<String> modeles = new ArrayList<>();
+		try {
+			sql = connect.prepareStatement("select distinct modele_vehicule from vehicule");
+			rs = sql.executeQuery();
+
+			while (rs.next()) {
+				modeles.add(rs.getString("modele_vehicule"));
+			}
+			return modeles;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ArrayList<String> getCouleur() {
+		ArrayList<String> couleurs = new ArrayList<>();
+		try {
+			sql = connect.prepareStatement("select distinct couleur_vehicule from vehicule");
+			rs = sql.executeQuery();
+
+			while (rs.next()) {
+				couleurs.add(rs.getString("couleur_vehicule"));
+			}
+			return couleurs;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public boolean update(int id_image, Vehicule vehicule) {
 		try {
 			sql = connect.prepareStatement("{call updateVehicule(?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?)}");
 			sql.setInt(1, vehicule.getId());
@@ -81,12 +161,12 @@ public class VehiculeDao implements IDao<Vehicule> {
 			sql.setString(9, vehicule.getCouleur());
 			sql.setFloat(10, vehicule.getPrix());
 			sql.setString(11, vehicule.getImmatriculation());
-			sql.setDate(12 ,vehicule.getDate_arrivee());
+			sql.setDate(12, vehicule.getDate_arrivee());
 			sql.setString(13, vehicule.getDescription());
 			sql.setDouble(14, vehicule.getKilometrage());
 			sql.setString(15, vehicule.getOptions());
 			sql.execute();
-			
+
 			System.out.println("Update OK");
 			return true;
 
