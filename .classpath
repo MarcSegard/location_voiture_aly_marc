@@ -7,5 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="src/ressources/mysql-connector-j-8.0.32.jar"/>
+	<classpathentry kind="lib" path="src/ressources/jdatepicker-1.3.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

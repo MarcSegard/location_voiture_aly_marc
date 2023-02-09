@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import controller.UserDao;
 import controller.VehiculeDao;
 import model.Vehicule;
 
@@ -52,8 +53,10 @@ public class MainFrame extends JFrame {
 		btnNewButton.setIcon(new ImageIcon(MainFrame.class.getResource("/assets/icones/login.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Inscription login = new Inscription();
-				login.setVisible(true);
+				if (UserDao.currentUser == null) {
+					Inscription login = new Inscription();
+					login.setVisible(true);
+				}
 			}
 		});
 		btnNewButton.setBounds(1389, 18, 76, 60);
