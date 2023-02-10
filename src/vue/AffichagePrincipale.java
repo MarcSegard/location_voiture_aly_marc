@@ -23,10 +23,14 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import java.awt.Color;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class AffichagePrincipale extends JPanel {
 
@@ -107,30 +111,58 @@ public class AffichagePrincipale extends JPanel {
 		lblSearch.setBounds(6, 39, 51, 42);
 		add(lblSearch);
 
+		
+		
+		
+		
 		JLabel lblNewLabel_date_debut = new JLabel("Date de début de location :  ");
 		lblNewLabel_date_debut.setLocation(16, 669);
 		lblNewLabel_date_debut.setSize(200, 42);
 		lblNewLabel_date_debut.setFont(new Font("Nanum Gothic", Font.PLAIN, 14));
 		add(lblNewLabel_date_debut);
+		
+		
+		
 		UtilDateModel model = new UtilDateModel();
+		LocalDate today = LocalDate.now();
+		model.setDate(today.getYear(),today.getMonthValue()-1, today.getDayOfMonth());
+		model.setSelected(true);
 		JDatePanelImpl datePanel = new JDatePanelImpl(model);
 		JDatePickerImpl dateDebutLoc = new JDatePickerImpl(datePanel);
 		dateDebutLoc.setLocation(206, 677);
 		dateDebutLoc.setSize(200, 34);
 		add(dateDebutLoc);
 
+	
 		JLabel lblNewLabel_date_fin = new JLabel("Date de fin de location :  ");
 		lblNewLabel_date_fin.setLocation(37, 701);
 		lblNewLabel_date_fin.setSize(200, 42);
 		lblNewLabel_date_fin.setFont(new Font("Nanum Gothic", Font.PLAIN, 14));
 		add(lblNewLabel_date_fin);
+		
+		
+		
 		UtilDateModel model2 = new UtilDateModel();
+		model2.setDate(today.getYear(),today.getMonthValue()-1, today.getDayOfMonth()+1);
+		model2.setSelected(true);
 		JDatePanelImpl datePanel2 = new JDatePanelImpl(model2);
 		JDatePickerImpl dateFinLoc = new JDatePickerImpl(datePanel2);
 		dateFinLoc.setLocation(206, 709);
 		dateFinLoc.setSize(200, 34);
 		add(dateFinLoc);
 
+		//Mise à jour du JDatePicker de fin de location avec 
+		//JDatePicker de début de location + 1 jour
+		dateDebutLoc.getJFormattedTextField().addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				model2.setDate(datePanel.getModel().getYear(),datePanel.getModel().getMonth(), datePanel.getModel().getDay()+1);
+			}
+		});
+		
+		
+		
+		
+		
 		JLabel imageVehicule = new JLabel("");
 		imageVehicule.setHorizontalAlignment(SwingConstants.CENTER);
 		imageVehicule.setIcon(
