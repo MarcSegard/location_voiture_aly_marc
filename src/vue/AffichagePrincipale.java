@@ -26,6 +26,7 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import java.awt.Color;
@@ -40,6 +41,8 @@ public class AffichagePrincipale extends JPanel {
 
 	private VehiculeDao vehiculeDao = new VehiculeDao();
 	private ArrayList<Vehicule> vehicules = vehiculeDao.read();
+	private int nbreJoursLocation;
+	private Vehicule vehiculeSelected = vehicules.get(0);
 
 	/**
 	 * Create the panel.
@@ -111,21 +114,15 @@ public class AffichagePrincipale extends JPanel {
 		lblSearch.setBounds(6, 39, 51, 42);
 		add(lblSearch);
 
-		
-		
-		
-		
 		JLabel lblNewLabel_date_debut = new JLabel("Date de début de location :  ");
 		lblNewLabel_date_debut.setLocation(16, 669);
 		lblNewLabel_date_debut.setSize(200, 42);
 		lblNewLabel_date_debut.setFont(new Font("Nanum Gothic", Font.PLAIN, 14));
 		add(lblNewLabel_date_debut);
-		
-		
-		
+
 		UtilDateModel model = new UtilDateModel();
 		LocalDate today = LocalDate.now();
-		model.setDate(today.getYear(),today.getMonthValue()-1, today.getDayOfMonth());
+		model.setDate(today.getYear(), today.getMonthValue() - 1, today.getDayOfMonth());
 		model.setSelected(true);
 		JDatePanelImpl datePanel = new JDatePanelImpl(model);
 		JDatePickerImpl dateDebutLoc = new JDatePickerImpl(datePanel);
@@ -133,53 +130,37 @@ public class AffichagePrincipale extends JPanel {
 		dateDebutLoc.setSize(200, 34);
 		add(dateDebutLoc);
 
-	
 		JLabel lblNewLabel_date_fin = new JLabel("Date de fin de location :  ");
 		lblNewLabel_date_fin.setLocation(37, 701);
 		lblNewLabel_date_fin.setSize(200, 42);
 		lblNewLabel_date_fin.setFont(new Font("Nanum Gothic", Font.PLAIN, 14));
 		add(lblNewLabel_date_fin);
-		
-		
-		
+
 		UtilDateModel model2 = new UtilDateModel();
-		model2.setDate(today.getYear(),today.getMonthValue()-1, today.getDayOfMonth()+1);
+		model2.setDate(today.getYear(), today.getMonthValue() - 1, today.getDayOfMonth() + 1);
 		model2.setSelected(true);
 		JDatePanelImpl datePanel2 = new JDatePanelImpl(model2);
 		JDatePickerImpl dateFinLoc = new JDatePickerImpl(datePanel2);
 		dateFinLoc.setLocation(206, 709);
 		dateFinLoc.setSize(200, 34);
-		add(dateFinLoc);
+		add(dateFinLoc);		
 
-		//Mise à jour du JDatePicker de fin de location avec 
-		//JDatePicker de début de location + 1 jour
-		dateDebutLoc.getJFormattedTextField().addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				model2.setDate(datePanel.getModel().getYear(),datePanel.getModel().getMonth(), datePanel.getModel().getDay()+1);
-			}
-		});
-		
-		
-		
-		
-		
 		JLabel imageVehicule = new JLabel("");
 		imageVehicule.setHorizontalAlignment(SwingConstants.CENTER);
-		imageVehicule.setIcon(
-				new ImageIcon(AffichagePrincipale.class.getResource(vehicules.get(0).getChemin_image())));
+		imageVehicule.setIcon(new ImageIcon(AffichagePrincipale.class.getResource(vehicules.get(0).getChemin_image())));
 		imageVehicule.setBounds(866, 6, 600, 300);
 		add(imageVehicule);
 
 		JLabel lblNewLabel = new JLabel("Total (€) :");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(571, 689, 141, 31);
+		lblNewLabel.setBounds(489, 689, 141, 31);
 		add(lblNewLabel);
 
 		JLabel lblPrixLocation = new JLabel(String.valueOf(vehicules.get(0).getPrix()));
-		lblPrixLocation.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPrixLocation.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPrixLocation.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-		lblPrixLocation.setBounds(682, 680, 156, 49);
+		lblPrixLocation.setBounds(642, 680, 196, 49);
 		add(lblPrixLocation);
 
 		JButton btnNewButton = new JButton("Louer");
@@ -194,48 +175,50 @@ public class AffichagePrincipale extends JPanel {
 		btnNewButton.setFont(new Font("SansSerif", Font.PLAIN, 30));
 		btnNewButton.setBounds(1130, 687, 129, 34);
 		add(btnNewButton);
-		
-		JLabel lblCardTitle = new JLabel(vehicules.get(0).getMarque()+ " " + vehicules.get(0).getModele_vehicule());
+
+		JLabel lblCardTitle = new JLabel(vehicules.get(0).getMarque() + " " + vehicules.get(0).getModele_vehicule());
 		lblCardTitle.setFont(new Font("SansSerif", Font.PLAIN, 35));
 		lblCardTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCardTitle.setBounds(908, 300, 558, 49);
 		add(lblCardTitle);
-		
+
 		JLabel lblCardLabelCarburant = new JLabel("");
-		lblCardLabelCarburant.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/icones/Carburant.png")));
+		lblCardLabelCarburant
+				.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/icones/Carburant.png")));
 		lblCardLabelCarburant.setBounds(946, 361, 51, 55);
 		add(lblCardLabelCarburant);
-		
+
 		JLabel lblCardLabelCouleur = new JLabel("");
 		lblCardLabelCouleur.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/icones/Couleur.png")));
 		lblCardLabelCouleur.setBounds(946, 443, 51, 55);
 		add(lblCardLabelCouleur);
-		
+
 		JLabel lblCardLabelOptions = new JLabel("");
 		lblCardLabelOptions.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/icones/Options.png")));
 		lblCardLabelOptions.setBounds(946, 521, 51, 55);
 		add(lblCardLabelOptions);
-		
+
 		JLabel lblCardViewCarburant = new JLabel(vehicules.get(0).getCarburant());
 		lblCardViewCarburant.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblCardViewCarburant.setBounds(1031, 373, 374, 34);
 		add(lblCardViewCarburant);
-		
+
 		JLabel lblCardViewCouleur = new JLabel(vehicules.get(0).getCouleur());
 		lblCardViewCouleur.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblCardViewCouleur.setBounds(1031, 453, 374, 38);
 		add(lblCardViewCouleur);
-		
+
 		JLabel lblCardViewOptions = new JLabel(vehicules.get(0).getOptions());
 		lblCardViewOptions.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblCardViewOptions.setBounds(1031, 531, 374, 37);
 		add(lblCardViewOptions);
-		
+
 		JLabel lblCardLabelDescription = new JLabel("");
-		lblCardLabelDescription.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/icones/Description.png")));
+		lblCardLabelDescription
+				.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/icones/Description.png")));
 		lblCardLabelDescription.setBounds(946, 603, 51, 49);
 		add(lblCardLabelDescription);
-		
+
 		JTextArea textAreaCardViewDescription = new JTextArea(vehicules.get(0).getDescription());
 		textAreaCardViewDescription.setBorder(null);
 		textAreaCardViewDescription.setBackground(new Color(238, 238, 238));
@@ -248,15 +231,36 @@ public class AffichagePrincipale extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.err.println(table.getSelectedRow());
-				Vehicule vehiculeSelected= vehicules.get(table.getSelectedRow());
-				imageVehicule.setIcon(new ImageIcon(
-						AffichagePrincipale.class.getResource( vehiculeSelected.getChemin_image())));
-				lblPrixLocation.setText(String.valueOf( vehiculeSelected.getPrix()));
-				lblCardTitle.setText(vehiculeSelected.getMarque()+ " " + vehiculeSelected.getModele_vehicule());
+				vehiculeSelected = vehicules.get(table.getSelectedRow());
+				imageVehicule.setIcon(
+						new ImageIcon(AffichagePrincipale.class.getResource(vehiculeSelected.getChemin_image())));
+				lblPrixLocation.setText(String.valueOf(vehiculeSelected.getPrix()));
+				lblCardTitle.setText(vehiculeSelected.getMarque() + " " + vehiculeSelected.getModele_vehicule());
 				lblCardViewCarburant.setText(vehiculeSelected.getCarburant());
 				lblCardViewCouleur.setText(vehiculeSelected.getCouleur());
 				lblCardViewOptions.setText(vehiculeSelected.getOptions());
 				textAreaCardViewDescription.setText(vehiculeSelected.getDescription());
+				miseAJourPrixLocation(lblPrixLocation);
+			}
+		});
+		
+		// Mise à jour du JDatePicker de fin de location avec
+		// JDatePicker de début de location + 1 jour
+		// Mise à jour du total en fonction du nombre de jours
+		dateDebutLoc.getJFormattedTextField().addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				model2.setDate(datePanel.getModel().getYear(), datePanel.getModel().getMonth(),
+						datePanel.getModel().getDay() + 1);
+			}
+		});
+
+		// Mise à jour du total en fonction du nombre de jours
+		dateFinLoc.getJFormattedTextField().addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				Date selectedStartDate = (Date) datePanel.getModel().getValue();
+				Date selectedEndDate = (Date) datePanel2.getModel().getValue();
+				nbreJoursLocation = (int) diffDays(selectedStartDate, selectedEndDate);
+				miseAJourPrixLocation(lblPrixLocation);
 			}
 		});
 
@@ -272,5 +276,16 @@ public class AffichagePrincipale extends JPanel {
 		}
 		return tableau;
 
+	}
+
+	private long diffDays(Date start, Date fin) {
+		TimeUnit time = TimeUnit.DAYS;
+		long difference = time.convert(fin.getTime() - start.getTime(), TimeUnit.MILLISECONDS);
+		System.out.println("Diff days :  " + String.valueOf(difference));
+		return difference;
+	}
+	
+	private void miseAJourPrixLocation(JLabel affichagePrix) {
+		affichagePrix.setText(String.format("%.2f", nbreJoursLocation * vehiculeSelected.getPrix()));
 	}
 }
