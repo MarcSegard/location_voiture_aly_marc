@@ -43,6 +43,8 @@ public class AffichagePrincipale extends JPanel {
 	private ArrayList<Vehicule> vehicules = vehiculeDao.read();
 	private int nbreJoursLocation;
 	private Vehicule vehiculeSelected = vehicules.get(0);
+	private Date selectedStartDate;
+	private Date selectedEndDate;
 
 	/**
 	 * Create the panel.
@@ -143,7 +145,7 @@ public class AffichagePrincipale extends JPanel {
 		JDatePickerImpl dateFinLoc = new JDatePickerImpl(datePanel2);
 		dateFinLoc.setLocation(206, 709);
 		dateFinLoc.setSize(200, 34);
-		add(dateFinLoc);		
+		add(dateFinLoc);
 
 		JLabel imageVehicule = new JLabel("");
 		imageVehicule.setHorizontalAlignment(SwingConstants.CENTER);
@@ -164,14 +166,7 @@ public class AffichagePrincipale extends JPanel {
 		add(lblPrixLocation);
 
 		JButton btnNewButton = new JButton("Louer");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (UserDao.currentUser == null) {
-					Inscription login = new Inscription();
-					login.setVisible(true);
-				}
-			}
-		});
+
 		btnNewButton.setFont(new Font("SansSerif", Font.PLAIN, 30));
 		btnNewButton.setBounds(1130, 687, 129, 34);
 		add(btnNewButton);
@@ -243,7 +238,7 @@ public class AffichagePrincipale extends JPanel {
 				miseAJourPrixLocation(lblPrixLocation);
 			}
 		});
-		
+
 		// Mise à jour du JDatePicker de fin de location avec
 		// JDatePicker de début de location + 1 jour
 		// Mise à jour du total en fonction du nombre de jours
@@ -257,16 +252,27 @@ public class AffichagePrincipale extends JPanel {
 		// Mise à jour du total en fonction du nombre de jours
 		dateFinLoc.getJFormattedTextField().addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				Date selectedStartDate = (Date) datePanel.getModel().getValue();
-				Date selectedEndDate = (Date) datePanel2.getModel().getValue();
+				selectedStartDate = (Date) datePanel.getModel().getValue();
+				selectedEndDate = (Date) datePanel2.getModel().getValue();
 				nbreJoursLocation = (int) diffDays(selectedStartDate, selectedEndDate);
 				miseAJourPrixLocation(lblPrixLocation);
 			}
 		});
 
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (UserDao.currentUser == null) {
+					Inscription login = new Inscription();
+					login.setVisible(true);
+				} else {
+					ShowLocation showFacture = new ShowLocation(vehiculeSelected,nbreJoursLocation,selectedStartDate, selectedEndDate,lblPrixLocation.getText());
+					showFacture.setVisible(true);
+				}
+			}
+		});
 	}
 
-	public DefaultTableModel listeVehicule() {
+	private DefaultTableModel listeVehicule() {
 		// Création de la colonne
 		String col[] = { "Catégorie", "Marque", "modèle", "couleur", "Carburant", "Prix (€/jour)" };
 		DefaultTableModel tableau = new DefaultTableModel(null, col);
@@ -284,7 +290,7 @@ public class AffichagePrincipale extends JPanel {
 		System.out.println("Diff days :  " + String.valueOf(difference));
 		return difference;
 	}
-	
+
 	private void miseAJourPrixLocation(JLabel affichagePrix) {
 		affichagePrix.setText(String.format("%.2f", nbreJoursLocation * vehiculeSelected.getPrix()));
 	}

@@ -5,9 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.UserDao;
-import controller.VehiculeDao;
 import model.User;
-import model.Vehicule;
 
 //import controller.UserDao;
 //import model.User;
@@ -20,8 +18,6 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.awt.event.ActionEvent;
@@ -180,9 +176,13 @@ public class Inscription extends JFrame {
 				} else if (uc1.checkEmailIsExist(email)) {
 					JOptionPane.showMessageDialog(null, "Votre mail existe déjà, veuillez en choisir un autre.", "Oups",
 							JOptionPane.ERROR_MESSAGE);
-				} else if (!matcherMdP.find()) {
+				}else if (email.contains("agence.fr")){
+					JOptionPane.showMessageDialog(null, "Bien tenté !!!!", "Halte aux pirates",
+							JOptionPane.ERROR_MESSAGE);
+				}else if (!matcherMdP.find()) {
 					JOptionPane.showMessageDialog(null,
-							"Votre mot de passe est trop faible. \n Il doit contenir au moins :\n\t - une lettre minuscule\n\t - une lettre majuscule\n\t - un chiffre\n\t - un caractère spécial (#?!@$%^&*-)",
+							"Votre mot de passe est trop faible. \n Il doit contenir au moins :\n\t - une lettre minuscule\n\t - une lettre majuscule"
+							+ "\n\t - un chiffre\n\t - un caractère spécial (#?!@$%^&*-)\n\t - au moins 8 caractères",
 							"Oups", JOptionPane.ERROR_MESSAGE);
 				} else if (name.length() == 0 || firstName.length() == 0 || email.length() == 0
 						|| inputPassword.getPassword().length == 0 || permis.length() == 0) {
