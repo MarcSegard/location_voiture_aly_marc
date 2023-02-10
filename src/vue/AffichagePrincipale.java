@@ -21,6 +21,8 @@ import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
@@ -31,6 +33,7 @@ public class AffichagePrincipale extends JPanel {
 	private JTextField textSearch;
 
 	private VehiculeDao vehiculeDao = new VehiculeDao();
+	private ArrayList<Vehicule> vehicules = vehiculeDao.read();
 
 	/**
 	 * Create the panel.
@@ -42,7 +45,6 @@ public class AffichagePrincipale extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(6, 106, 832, 562);
 		add(scrollPane);
-
 
 		table = new JTable();
 		table.setModel(listeVehicule());
@@ -130,7 +132,7 @@ public class AffichagePrincipale extends JPanel {
 		JLabel imageVehicule = new JLabel("");
 		imageVehicule.setHorizontalAlignment(SwingConstants.CENTER);
 		imageVehicule.setIcon(
-				new ImageIcon(AffichagePrincipale.class.getResource("/assets/images/SUV/BMWiX_M60_electrique.png")));
+				new ImageIcon(AffichagePrincipale.class.getResource(vehicules.get(0).getChemin_image())));
 		imageVehicule.setBounds(866, 6, 600, 300);
 		add(imageVehicule);
 
@@ -159,23 +161,26 @@ public class AffichagePrincipale extends JPanel {
 		btnNewButton.setBounds(1130, 687, 129, 34);
 		add(btnNewButton);
 
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.err.println(table.getSelectedRow());
+				imageVehicule.setIcon(new ImageIcon(
+						AffichagePrincipale.class.getResource(vehicules.get(table.getSelectedRow()).getChemin_image())));
+			}
+		});
+
 	}
-	
+
 	public DefaultTableModel listeVehicule() {
-		//Création de la colonne
-		String col [] =  {"Catégorie", "Marque", "modèle", "couleur", "Carburant", "Prix (€/jour)"};
+		// Création de la colonne
+		String col[] = { "Catégorie", "Marque", "modèle", "couleur", "Carburant", "Prix (€/jour)" };
 		DefaultTableModel tableau = new DefaultTableModel(null, col);
-		for (Vehicule vehicule : vehiculeDao.read()) {
-			tableau.addRow(new Object[] {
-					vehicule.getCategorie(),
-					vehicule.getMarque(),
-					vehicule.getModele_vehicule(),
-					vehicule.getCouleur(),
-					vehicule.getCarburant(),
-					vehicule.getPrix()
-			});
+		for (Vehicule vehicule : vehicules) {
+			tableau.addRow(new Object[] { vehicule.getCategorie(), vehicule.getMarque(), vehicule.getModele_vehicule(),
+					vehicule.getCouleur(), vehicule.getCarburant(), vehicule.getPrix() });
 		}
 		return tableau;
-		
+
 	}
 }
