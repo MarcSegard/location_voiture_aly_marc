@@ -49,22 +49,22 @@ call addVehicule("abis","monospace","diesel","renault","Espace","/assets/images/
 call addVehicule("abis","monospace","diesel","renault","Grand Scénic","/assets/images/monospace/GrandScénicSuperGasoil.png", "noire", 55.9,
 "TW-006-AA", now(),"Véhicule familial, spacieux idéale pour les voyages", 1000,"GPS / Android Auto / AppleCar");
 
-call addVehicule("abis","utilitaire","hybride","citroën","Berlingo","/assets/images/monospace/Citroen_Berlingo.png", "grise", 35.9,
+call addVehicule("abis","utilitaire","hybride","citroën","Berlingo","/assets/images/utilitaire/Citroen_Berlingo.png", "grise", 35.9,
 "TW-007-AA", now(),"Véhicule utilitaire, idéale pour les travaux ou activités nécessitant un grand coffre", 4000,"GPS");
 
-call addVehicule("abis","utilitaire","super98","renault","Kangoo","/assets/images/monospace/KangooSuperDiesel.png", "rouge", 37.9,
+call addVehicule("abis","utilitaire","super98","renault","Kangoo","/assets/images/utilitaire/KangooSuperDiesel.png", "rouge", 37.9,
 "TW-008-AA", now(),"Véhicule utilitaire, idéale pour les travaux ou activités nécessitant un grand coffre", 8000,"GPS climatisation");
 
-call addVehicule("abis","utilitaire","hybride","renault","Mégane Estate","/assets/images/monospace/MeganeEstateHybride.png", "bleue", 47.9,
+call addVehicule("abis","utilitaire","hybride","renault","Mégane Estate","/assets/images/utilitaire/MeganeEstateHybride.png", "bleue", 47.9,
 "TW-009-AA", now(),"Véhicule utilitaire, idéale pour les travaux ou activités nécessitant un grand coffre", 23000,"GPS / Android Auto / AppleCar");
 
-call addVehicule("abis","utilitaire","diesel","renault","Traffic Combi","/assets/images/monospace/TrafficCombiSuperDiesel.png", "rouge", 47.9,
+call addVehicule("abis","utilitaire","diesel","renault","Traffic Combi","/assets/images/utilitaire/TrafficCombiSuperDiesel.png", "rouge", 47.9,
 "TW-010-AA", now(),"Véhicule utilitaire, idéale pour les travaux ou activités nécessitant un grand coffre", 23000,"GPS / Android Auto / AppleCar");
 
-call addVehicule("abis","utilitaire","super98","renault","Traffic Space","/assets/images/monospace/TraficSpaceSuperDiesel.png", "noire", 51.9,
+call addVehicule("abis","utilitaire","super98","renault","Traffic Space","/assets/images/utilitaire/TraficSpaceSuperDiesel.png", "noire", 51.9,
 "TW-011-AA", now(),"Véhicule utilitaire, idéale pour les travaux ou activités nécessitant un grand coffre", 2000,"GPS / Android Auto / AppleCar");
 
-call addVehicule("abis","SUV","électrique","BMW","iX","/assets/images/monospace/BMWiX_electrique.png", "rouge", 71.9,
+call addVehicule("abis","SUV","électrique","BMW","iX","/assets/images/SUV/BMWiX_electrique.png", "rouge", 71.9,
 "TW-012-AA", now(),"Véhicule sportif, idéal pour promenade à la campgane", 2500,"GPS / Android Auto / AppleCar");
 
 call addVehicule("abis","SUV","super98","BMW","iX M60","/assets/images/SUV/BMWiX_M60_electrique.png", "bleue", 75.6,
@@ -85,5 +85,3 @@ call addVehicule("abis","SUV","diesel","renault","Koléos","/assets/images/SUV/K
 call addVehicule("abis","SUV","électrique","audi","Q4","/assets/images/SUV/Q4e-tron.png", "grise", 81.6,
 "TW-116-YZ", now(),"SUV  spacieux et confortable pour vos ballages en campagne.",15500,"GPS / Android Auto / AppleCar");
 
-call updateVehicule(6,6,"abis","SUV","électrique","audi","Q4 update","/assets/images/SUV/update.png", "grise", 81.6,
-"TW-116-YZ", now(),"SUV  spacieux et confortable pour vos ballages en campagne.",15500,"GPS / Android Auto / AppleCar");
