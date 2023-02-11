@@ -8,8 +8,8 @@ public class Connect {
 		
 		Connection myConnection = null;
 		String BdD = "agence_aly_marc";
-		String user = "admin";
-		String password = "etnoncenestpasadmin";
+		String user = "root";
+		String password = "";
 		String url;
 		
 		String OS = System.getProperty("os.name");
