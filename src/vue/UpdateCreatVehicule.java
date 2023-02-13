@@ -194,16 +194,16 @@ public class UpdateCreatVehicule extends JFrame {
 
 				//textField_image.setText(titre.getText()+"."+chemin.substring(chemin.lastIndexOf(".")+1));
 				
-				String destination = "src/assets/images/"+comboBox_categorie.getSelectedItem().toString()+"/"+file.getSelectedFile(); // src/resources/homer.jpg
-				File folder = new File(destination);
+				String destination = "src/assets/images/"+comboBox_categorie.getSelectedItem().toString()+"/"+file.getSelectedFile().getName(); // src/resources/homer.jpg
+				
 				System.out.println(destination);
 				File source = new File(chemin);
 				File destinationFinal = new File(destination);
-				System.out.println(fileSelected );
+			
 				
 				try {
 					Files.copy(source.toPath(), destinationFinal.toPath());
-					System.out.println("Dans le  try ok");
+					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
