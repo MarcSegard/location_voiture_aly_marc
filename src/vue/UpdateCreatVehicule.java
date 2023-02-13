@@ -97,7 +97,7 @@ public class UpdateCreatVehicule extends JFrame {
 				dispose();
 			}
 		});
-		btn_finish.setBounds(10, 89, 208, 21);
+		btn_finish.setBounds(10, 49, 208, 21);
 		contentPane.add(btn_finish);
 		
 		JLabel Categ = new JLabel("Categorie");
@@ -186,29 +186,23 @@ public class UpdateCreatVehicule extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				JFileChooser file = new JFileChooser();
 				file.showOpenDialog(file);
-
+				//
 				//RECUPERATION DU FILCHIER SELECTIONNER
 				File fileSelected = file.getSelectedFile();
-				
 				String chemin = fileSelected.getAbsolutePath();
-
-				//textField_image.setText(titre.getText()+"."+chemin.substring(chemin.lastIndexOf(".")+1));
-				
-				String destination = "src/assets/images/"+comboBox_categorie.getSelectedItem().toString()+"/"+file.getSelectedFile().getName(); // src/resources/homer.jpg
-				
-				System.out.println(destination);
+				String destination = "src/assets/images/"+comboBox_categorie.getSelectedItem().toString()+"/"+file.getSelectedFile().getName();
 				File source = new File(chemin);
 				File destinationFinal = new File(destination);
-			
-				
+				String tempo= destination.substring(destination.indexOf("/")).trim();
+				System.out.println(destination.substring(destination.indexOf("/")));
+				lbl_vehicule_view.setIcon(new ImageIcon(UpdateCreatVehicule.class.getResource(tempo.toString())));//"/assets/images/petite_citadine/Q4e-Test.png"
+				/*
 				try {
 					Files.copy(source.toPath(), destinationFinal.toPath());
-					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
-				
+				}*/
 			}
 		});
 	}
