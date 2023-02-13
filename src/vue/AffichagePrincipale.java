@@ -27,6 +27,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import java.awt.Color;
@@ -41,6 +42,16 @@ public class AffichagePrincipale extends JPanel {
 
 	private VehiculeDao vehiculeDao = new VehiculeDao();
 	private ArrayList<Vehicule> vehicules = vehiculeDao.read();
+	private ArrayList<Vehicule> vehiculesFiltered = vehicules;
+	
+	/* Exemple de filtrage  */
+	/*private ArrayList<Vehicule> vehicules= (ArrayList<Vehicule>) vehiculesIn.stream()
+													.filter(voiture -> "noire".equals(voiture.getCouleur()))
+													.filter(voiture -> "renault".equals(voiture.getMarque()))
+													.filter(voiture -> "diesel".equals(voiture.getCarburant()))
+													.collect(Collectors.toList());*/
+	/************************/
+	
 	private int nbreJoursLocation;
 	private Vehicule vehiculeSelected = vehicules.get(0);
 	private Date selectedStartDate;
@@ -58,7 +69,7 @@ public class AffichagePrincipale extends JPanel {
 		add(scrollPane);
 
 		table = new JTable();
-		table.setModel(listeVehicule());
+		table.setModel(listeVehicule(vehicules));
 		table.setBackground(UIManager.getColor("Button.select"));
 		table.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
 		scrollPane.setViewportView(table);
@@ -74,6 +85,7 @@ public class AffichagePrincipale extends JPanel {
 		ArrayList<String> categories = vehiculeDao.getCategorie();
 		categories.add(0, "*");
 		String[] categorieToCombo = categories.toArray(new String[categories.size()]);
+		
 		JComboBox comboBoxCategorie = new JComboBox(categorieToCombo);
 		comboBoxCategorie.setBounds(6, 86, 141, 25);
 		add(comboBoxCategorie);
@@ -221,12 +233,24 @@ public class AffichagePrincipale extends JPanel {
 		textAreaCardViewDescription.setLineWrap(true);
 		textAreaCardViewDescription.setBounds(1032, 598, 373, 70);
 		add(textAreaCardViewDescription);
+		
+		
+		comboBoxCategorie.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				vehiculesFiltered= (ArrayList<Vehicule>) vehicules.stream()
+						.filter(voiture -> comboBoxCategorie.getSelectedItem().toString().equals(voiture.getCategorie()))
+						.collect(Collectors.toList());
 
+				table.setModel(listeVehicule(vehiculesFiltered));
+			}
+		});
+
+		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.err.println(table.getSelectedRow());
-				vehiculeSelected = vehicules.get(table.getSelectedRow());
+				vehiculeSelected = vehiculesFiltered.get(table.getSelectedRow());
 				imageVehicule.setIcon(
 						new ImageIcon(AffichagePrincipale.class.getResource(vehiculeSelected.getChemin_image())));
 				lblPrixLocation.setText(String.valueOf(vehiculeSelected.getPrix()));
@@ -272,16 +296,15 @@ public class AffichagePrincipale extends JPanel {
 		});
 	}
 
-	private DefaultTableModel listeVehicule() {
+	private DefaultTableModel listeVehicule(ArrayList<Vehicule> vehiculesInTable) {
 		// Création de la colonne
 		String col[] = { "Catégorie", "Marque", "modèle", "couleur", "Carburant", "Prix (€/jour)" };
 		DefaultTableModel tableau = new DefaultTableModel(null, col);
-		for (Vehicule vehicule : vehicules) {
+		for (Vehicule vehicule : vehiculesInTable) {
 			tableau.addRow(new Object[] { vehicule.getCategorie(), vehicule.getMarque(), vehicule.getModele_vehicule(),
 					vehicule.getCouleur(), vehicule.getCarburant(), vehicule.getPrix() });
 		}
 		return tableau;
-
 	}
 
 	private long diffDays(Date start, Date fin) {
