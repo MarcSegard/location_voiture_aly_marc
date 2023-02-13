@@ -53,6 +53,13 @@ public class MainFrame extends JFrame {
 				if (UserDao.currentUser == null) {
 					Inscription login = new Inscription();
 					login.setVisible(true);
+				}else if (UserDao.currentUser.getEmail().contains("@agence.fr")) {
+					if (UpdateCreatVehicule.nbrFenetre == 0) {
+						UpdateCreatVehicule upVehi = new  UpdateCreatVehicule();
+						upVehi.setVisible(true);
+						UpdateCreatVehicule.nbrFenetre++;
+					}
+					
 				}
 			}
 		});
