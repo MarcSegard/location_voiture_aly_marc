@@ -42,7 +42,7 @@ alter table location add constraint fk_location_facture foreign key (id_facture)
 
 insert into marque (nom_marque) values ("renault"),("peugeot"),("citroën"),("fiat"),("BMW"),("mercedes"),("audi");
 insert into carburant (nom_carburant) values ("diesel"),("super98"),("super95"),("électrique"),("hybride");
-insert into categorie (nom_categorie) values ("petite citadine"),("citadine"),("SUV"),("berline"),("monospace"),("utilitaire");
+insert into categorie (nom_categorie) values ("petite_citadine"),("citadine"),("SUV"),("berline"),("monospace"),("utilitaire");
 insert into type_paiement (nom_type_paiement) values ("paypal"),("VISA"),("MASTER CARD");
 
 -- trigger mise à jour CA de l'agence
