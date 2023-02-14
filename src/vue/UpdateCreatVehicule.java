@@ -65,7 +65,7 @@ public class UpdateCreatVehicule extends JFrame {
 		lbl_vehicule_view.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_vehicule_view.setIcon(new ImageIcon(
 				UpdateCreatVehicule.class.getResource("/assets/images/petite_citadine/smart_mercedes.png")));
-		lbl_vehicule_view.setBounds(27, 10, 740, 239);
+		lbl_vehicule_view.setBounds(332, 10, 435, 239);
 		contentPane.add(lbl_vehicule_view);
 		//
 		ArrayList<String> categories = vehiculeDao.getCategorie();
@@ -229,6 +229,7 @@ public class UpdateCreatVehicule extends JFrame {
 							+ vehi.getDescription() + " " + vehi.getKilometrage() + " " + vehi.getOptions() + " "
 							+ vehi.getCategorie() + " " + vehi.getCarburant() + " " + vehi.getMarque() + " "
 							+ vehi.getModele_vehicule() + " " + vehi.getChemin_image().toString());
+					
 					if (vehiculeDao.create(vehi)) {
 						JOptionPane.showMessageDialog(null, "Bravo, compte créé");
 						ImprimeVhculeShow vhculeShow = new ImprimeVhculeShow();
