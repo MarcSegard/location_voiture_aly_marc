@@ -1,7 +1,6 @@
 package controller;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -209,7 +208,6 @@ public class VehiculeDao implements IDao<Vehicule> {
 						rs.getString("nom_marque"),	rs.getString("modele_vehicule"), rs.getString("chemin_image"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("Recherche non aboutie veuillez ressayer!!");
 		}

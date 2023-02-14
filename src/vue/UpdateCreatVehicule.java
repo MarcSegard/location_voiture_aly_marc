@@ -306,15 +306,9 @@ public class UpdateCreatVehicule extends JFrame {
 				try {
 					Files.copy(source.toPath(), destinationFinal.toPath());
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
 		});
-		
-		
-		
-		
-		
 	}
 }

@@ -33,6 +33,8 @@ import javax.swing.JTextArea;
 import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class AffichagePrincipale extends JPanel {
 
@@ -291,6 +293,25 @@ public class AffichagePrincipale extends JPanel {
 				} else {
 					ShowLocation showFacture = new ShowLocation(vehiculeSelected,nbreJoursLocation,selectedStartDate, selectedEndDate,lblPrixLocation.getText());
 					showFacture.setVisible(true);
+				}
+			}
+		});
+		
+		textSearch.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode()==KeyEvent.VK_ENTER) {
+					vehiculesFiltered= (ArrayList<Vehicule>) vehicules.stream()
+							.filter(voiture -> (voiture.getCategorie().contains(textSearch.getText())
+									 || voiture.getCouleur().contains(textSearch.getText())
+									 || voiture.getCarburant().contains(textSearch.getText())
+									 || voiture.getDescription().contains(textSearch.getText())
+									 || voiture.getMarque().contains(textSearch.getText())
+									 || voiture.getModele_vehicule().contains(textSearch.getText())
+									 || voiture.getOptions().contains(textSearch.getText())))
+							.collect(Collectors.toList());
+
+					table.setModel(listeVehicule(vehiculesFiltered));
 				}
 			}
 		});
