@@ -37,6 +37,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 
 			sql.execute();
 			System.out.println("L'injection par porcedure stockee a marchée !!!");
+			return true ;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
