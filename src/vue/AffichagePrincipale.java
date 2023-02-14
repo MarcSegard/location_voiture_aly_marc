@@ -110,7 +110,7 @@ public class AffichagePrincipale extends JPanel {
 		JComboBox comboBoxModele = new JComboBox(modeleToCombo);
 		comboBoxModele.setBounds(281, 86, 141, 25);
 		add(comboBoxModele);
-
+		
 		ArrayList<String> couleurs = vehiculeDao.getCouleur();
 		couleurs.add(0, "*");
 		String[] couleurToCombo = couleurs.toArray(new String[couleurs.size()]);

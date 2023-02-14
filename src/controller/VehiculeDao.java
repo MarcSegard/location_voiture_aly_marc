@@ -1,6 +1,7 @@
 package controller;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,7 +38,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 
 			sql.execute();
 			System.out.println("L'injection par porcedure stockee a marchée !!!");
-			return true ;
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -99,7 +100,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<String> getCarburant() {
 		ArrayList<String> carburants = new ArrayList<>();
 		try {
@@ -115,7 +116,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<String> getModele() {
 		ArrayList<String> modeles = new ArrayList<>();
 		try {
@@ -131,7 +132,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<String> getCouleur() {
 		ArrayList<String> couleurs = new ArrayList<>();
 		try {
@@ -142,6 +143,21 @@ public class VehiculeDao implements IDao<Vehicule> {
 				couleurs.add(rs.getString("couleur_vehicule"));
 			}
 			return couleurs;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	public ArrayList<String> getImmatriculation() {
+		ArrayList<String> listimta = new ArrayList<>();
+		try {
+			sql = connect.prepareStatement("select distinct immatriculation_vehicule from vehicule");
+			rs = sql.executeQuery();
+
+			while (rs.next()) {
+				listimta.add(rs.getString("immatriculation_vehicule"));
+			}
+			return listimta;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -175,5 +191,28 @@ public class VehiculeDao implements IDao<Vehicule> {
 			e.printStackTrace();
 		}
 		return false;
+	}
+
+	public Vehicule findByImmatriculation(String immatriculation) {
+		Vehicule vehicule = null;
+		try {
+			sql = connect.prepareStatement("SELECT*FROM liste_vehicule WHERE immatriculation_vehicule = ?");
+			sql.setString(1, immatriculation);
+			rs = sql.executeQuery();
+			while (rs.next()) {
+
+				vehicule = new Vehicule(rs.getInt("id_vehicule"), rs.getString("couleur_vehicule"),
+						rs.getFloat("prix_vehicule"), rs.getString("immatriculation_vehicule"),
+						rs.getDate("date_arrivee_vehicule"), rs.getString("description_vehicule"),
+						rs.getDouble("kilometrage_vehicule"), rs.getString("options_vehicule"), rs.getString("nom_agence"),
+					 rs.getString("nom_categorie"), rs.getString("nom_carburant"),
+						rs.getString("nom_marque"),	rs.getString("modele_vehicule"), rs.getString("chemin_image"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Recherche non aboutie veuillez ressayer!!");
+		}
+		return vehicule;
 	}
 }

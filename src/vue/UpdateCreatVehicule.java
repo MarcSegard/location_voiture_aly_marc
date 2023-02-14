@@ -65,7 +65,7 @@ public class UpdateCreatVehicule extends JFrame {
 		lbl_vehicule_view.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_vehicule_view.setIcon(new ImageIcon(
 				UpdateCreatVehicule.class.getResource("/assets/images/petite_citadine/smart_mercedes.png")));
-		lbl_vehicule_view.setBounds(332, 10, 435, 239);
+		lbl_vehicule_view.setBounds(352, 10, 415, 239);
 		contentPane.add(lbl_vehicule_view);
 		//
 		ArrayList<String> categories = vehiculeDao.getCategorie();
@@ -100,7 +100,17 @@ public class UpdateCreatVehicule extends JFrame {
 		comboBox_carburant.setBounds(559, 329, 208, 21);
 		contentPane.add(comboBox_carburant);
 		//
-
+		ArrayList<String> matricules = vehiculeDao.getImmatriculation();
+		 matricules.add(0, "*********");
+		String[]  matriculesToCombo =  matricules.toArray(new String[ matricules.size()]);
+		JComboBox comboBox_imat_shearch = new JComboBox( matriculesToCombo);
+		comboBox_imat_shearch.setBounds(10, 55, 195, 21);
+		contentPane.add(comboBox_imat_shearch);
+		
+		JLabel lblChoixImmatiriculation = new JLabel("Choix immatiriculation");
+		lblChoixImmatiriculation.setBounds(10, 33, 149, 21);
+		contentPane.add(lblChoixImmatiriculation);
+		//
 		JButton btn_finish = new JButton("Terminer");
 		btn_finish.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -120,7 +130,7 @@ public class UpdateCreatVehicule extends JFrame {
 		contentPane.add(lblMarque);
 
 		JLabel lbl_model = new JLabel("Modèle");
-		lbl_model.setBounds(552, 259, 97, 21);
+		lbl_model.setBounds(559, 259, 97, 21);
 		contentPane.add(lbl_model);
 
 		JLabel lbl_carbu = new JLabel("Carburant");
@@ -128,15 +138,6 @@ public class UpdateCreatVehicule extends JFrame {
 		contentPane.add(lbl_carbu);
 
 		kilometreage_input = new JTextField();
-		kilometreage_input.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
-					e.consume();
-				}
-			}
-		});
 		kilometreage_input.setBounds(299, 280, 195, 19);
 		contentPane.add(kilometreage_input);
 		kilometreage_input.setColumns(10);
@@ -201,7 +202,49 @@ public class UpdateCreatVehicule extends JFrame {
 		lbl_Description.setBounds(10, 471, 84, 21);
 		contentPane.add(lbl_Description);
 		//
-
+		kilometreage_input.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+					e.consume();
+				}
+			}
+		});
+		//
+		Prix_unitaire_input.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (((c < '0') || (c > '9')) && (c != KeyEvent.VK_BACK_SPACE)) {
+					e.consume();
+				}
+			}
+		});
+		//
+		comboBox_imat_shearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String box =comboBox_imat_shearch.getSelectedItem().toString();
+				
+				Vehicule imat =vehiculeDao.findByImmatriculation(box);
+				System.out.println(imat.getDescription());
+				
+				comboBox_categorie.setSelectedItem(imat.getCategorie());
+				System.out.println(imat.getCategorie());
+				comboBox_model.setSelectedItem(imat.getModele_vehicule());
+				comboBox_marque.setSelectedItem(imat.getMarque());
+				comboBox_carburant.setSelectedItem(imat.getCarburant());
+				lbl_vehicule_view.setIcon(new ImageIcon(AffichagePrincipale.class.getResource(imat.getChemin_image())));
+				Prix_unitaire_input.setText(String.valueOf(imat.getPrix()));
+				Descript_input.setText(imat.getDescription());
+				input_option.setText(imat.getOptions());
+				Immatriculation_input.setText(imat.getImmatriculation());
+				couleur_input.setText(imat.getCouleur());
+				kilometreage_input.setText(String.valueOf(imat.getKilometrage()));
+				
+			}
+		});
 		//
 		JButton btn_create = new JButton("Create");
 		btn_create.addActionListener(new ActionListener() {
@@ -244,7 +287,7 @@ public class UpdateCreatVehicule extends JFrame {
 		});
 		btn_create.setBounds(254, 640, 208, 21);
 		contentPane.add(btn_create);
-		//
+		
 		lbl_vehicule_view.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -268,6 +311,10 @@ public class UpdateCreatVehicule extends JFrame {
 				}
 			}
 		});
+		
+		
+		
+		
+		
 	}
-
 }
