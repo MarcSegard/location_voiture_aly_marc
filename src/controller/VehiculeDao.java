@@ -21,7 +21,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 	public boolean create(Vehicule vehicule) {
 
 		try {
-			sql = connect.prepareStatement("{call addVehicule(?,?,?,?,?,?, ?,?, now(),?,?,?,?)}");
+			sql = connect.prepareStatement("{call addVehicule(?,?,?,?,?,?,?,?,?,now(),?,?,?)}");
 			sql.setString(1, vehicule.getAgence());
 			sql.setString(2, vehicule.getCategorie());
 			sql.setString(3, vehicule.getCarburant());

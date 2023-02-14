@@ -219,8 +219,8 @@ public class UpdateCreatVehicule extends JFrame {
 
 				} else {
 					Vehicule vehi = new Vehicule(couleur_input.getText(),
-							Float.parseFloat(Prix_unitaire_input.getText()), Immatriculation_input.getText(),
-							Descript_input.getText(), Double.parseDouble(kilometreage_input.getText()),
+							Float.parseFloat(Prix_unitaire_input.getText().toString()), Immatriculation_input.getText().toString(),
+							Descript_input.getText(), Double.parseDouble(kilometreage_input.getText().toString()),
 							input_option.getText(), "ABIS", comboBox_categorie.getSelectedItem().toString(),
 							comboBox_carburant.getSelectedItem().toString(),
 							comboBox_marque.getSelectedItem().toString(), comboBox_model.getSelectedItem().toString(),
