@@ -13,6 +13,7 @@ import java.text.DateFormat;
 
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 public class ShowLocation extends JDialog {
 
@@ -23,7 +24,7 @@ public class ShowLocation extends JDialog {
 	 */
 	public ShowLocation(Vehicule vehicule, int nbreJours, Date start, Date end, String montant) {
 		setResizable(false);
-		setBounds(100, 100, 413, 301);
+		setBounds(100, 100, 519, 463);
 		setTitle("Synthèse location " + UserDao.currentUser.getNom() + " " + UserDao.currentUser.getPrenom());
 		getContentPane().setLayout(null);
 		
@@ -41,11 +42,11 @@ public class ShowLocation extends JDialog {
 		String endFR = formatD.format(end);
 		
 		JLabel lblInfoDateStart = new JLabel("Du " + startFR);
-		lblInfoDateStart.setBounds(16, 97, 380, 16);
+		lblInfoDateStart.setBounds(16, 97, 266, 16);
 		getContentPane().add(lblInfoDateStart);
 		
 		JLabel lblInfoDateEnd = new JLabel(" au " + endFR + " (" + String.valueOf(nbreJours) + " jours)");
-		lblInfoDateEnd.setBounds(12, 118, 380, 16);
+		lblInfoDateEnd.setBounds(12, 118, 281, 16);
 		getContentPane().add(lblInfoDateEnd);
 		
 		JLabel lblNewLabel = new JLabel("Montant total : " + montant + "€");
@@ -56,6 +57,9 @@ public class ShowLocation extends JDialog {
 		JButton btnNewButton = new JButton("Confirmer la location");
 		btnNewButton.setBounds(104, 227, 196, 29);
 		getContentPane().add(btnNewButton);
+		
+		JLabel lblNewLabel_1 = new JLabel(new ImageIcon(new ImageIcon("src/"+vehicule.getChemin_image()).getImage().getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH)));
+		lblNewLabel_1.setBounds(313, 52, 200, 100);
+		getContentPane().add(lblNewLabel_1);
 	}
-
 }
