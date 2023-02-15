@@ -99,6 +99,22 @@ public class VehiculeDao implements IDao<Vehicule> {
 		}
 		return null;
 	}
+	
+	public ArrayList<String> getMoyenPaiement() {
+		ArrayList<String> paiements = new ArrayList<>();
+		try {
+			sql = connect.prepareStatement("select distinct nom_type_paiement from type_paiement");
+			rs = sql.executeQuery();
+
+			while (rs.next()) {
+				paiements.add(rs.getString("nom_type_paiement"));
+			}
+			return paiements;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public ArrayList<String> getCarburant() {
 		ArrayList<String> carburants = new ArrayList<>();
