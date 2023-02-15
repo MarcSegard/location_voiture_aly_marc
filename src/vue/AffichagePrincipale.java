@@ -45,15 +45,16 @@ public class AffichagePrincipale extends JPanel {
 	private VehiculeDao vehiculeDao = new VehiculeDao();
 	private ArrayList<Vehicule> vehicules = vehiculeDao.read();
 	private ArrayList<Vehicule> vehiculesFiltered = vehicules;
-	
-	/* Exemple de filtrage  */
-	/*private ArrayList<Vehicule> vehicules= (ArrayList<Vehicule>) vehiculesIn.stream()
-													.filter(voiture -> "noire".equals(voiture.getCouleur()))
-													.filter(voiture -> "renault".equals(voiture.getMarque()))
-													.filter(voiture -> "diesel".equals(voiture.getCarburant()))
-													.collect(Collectors.toList());*/
+
+	/* Exemple de filtrage */
+	/*
+	 * private ArrayList<Vehicule> vehicules= (ArrayList<Vehicule>)
+	 * vehiculesIn.stream() .filter(voiture -> "noire".equals(voiture.getCouleur()))
+	 * .filter(voiture -> "renault".equals(voiture.getMarque())) .filter(voiture ->
+	 * "diesel".equals(voiture.getCarburant())) .collect(Collectors.toList());
+	 */
 	/************************/
-	
+
 	private int nbreJoursLocation;
 	private Vehicule vehiculeSelected = vehicules.get(0);
 	private Date selectedStartDate;
@@ -87,7 +88,7 @@ public class AffichagePrincipale extends JPanel {
 		ArrayList<String> categories = vehiculeDao.getCategorie();
 		categories.add(0, "*");
 		String[] categorieToCombo = categories.toArray(new String[categories.size()]);
-		
+
 		JComboBox comboBoxCategorie = new JComboBox(categorieToCombo);
 		comboBoxCategorie.setBounds(6, 86, 141, 25);
 		add(comboBoxCategorie);
@@ -112,7 +113,7 @@ public class AffichagePrincipale extends JPanel {
 		JComboBox comboBoxModele = new JComboBox(modeleToCombo);
 		comboBoxModele.setBounds(281, 86, 141, 25);
 		add(comboBoxModele);
-		
+
 		ArrayList<String> couleurs = vehiculeDao.getCouleur();
 		couleurs.add(0, "*");
 		String[] couleurToCombo = couleurs.toArray(new String[couleurs.size()]);
@@ -235,18 +236,81 @@ public class AffichagePrincipale extends JPanel {
 		textAreaCardViewDescription.setLineWrap(true);
 		textAreaCardViewDescription.setBounds(1032, 598, 373, 70);
 		add(textAreaCardViewDescription);
-		
-		
+
 		comboBoxCategorie.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				vehiculesFiltered= (ArrayList<Vehicule>) vehicules.stream()
-						.filter(voiture -> comboBoxCategorie.getSelectedItem().toString().equals(voiture.getCategorie()))
-						.collect(Collectors.toList());
+				if (comboBoxCategorie.getSelectedIndex() != 0) {
+					vehiculesFiltered = (ArrayList<Vehicule>) vehicules.stream().filter(
+							voiture -> comboBoxCategorie.getSelectedItem().toString().equals(voiture.getCategorie()))
+							.collect(Collectors.toList());
 
-				table.setModel(listeVehicule(vehiculesFiltered));
+					table.setModel(listeVehicule(vehiculesFiltered));
+				} else {
+					vehiculesFiltered = vehicules;
+					table.setModel(listeVehicule(vehiculesFiltered));
+				}
 			}
 		});
+		
+		comboBoxMarques.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (comboBoxMarques.getSelectedIndex() != 0) {
+					vehiculesFiltered = (ArrayList<Vehicule>) vehicules.stream().filter(
+							voiture -> comboBoxMarques.getSelectedItem().toString().equals(voiture.getMarque()))
+							.collect(Collectors.toList());
 
+					table.setModel(listeVehicule(vehiculesFiltered));
+				} else {
+					vehiculesFiltered = vehicules;
+					table.setModel(listeVehicule(vehiculesFiltered));
+				}
+			}
+		});
+		
+		comboBoxModele.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (comboBoxModele.getSelectedIndex() != 0) {
+					vehiculesFiltered = (ArrayList<Vehicule>) vehicules.stream().filter(
+							voiture -> comboBoxModele.getSelectedItem().toString().equals(voiture.getModele_vehicule()))
+							.collect(Collectors.toList());
+
+					table.setModel(listeVehicule(vehiculesFiltered));
+				} else {
+					vehiculesFiltered = vehicules;
+					table.setModel(listeVehicule(vehiculesFiltered));
+				}
+			}
+		});
+		
+		comboBoxCouleur.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (comboBoxCouleur.getSelectedIndex() != 0) {
+					vehiculesFiltered = (ArrayList<Vehicule>) vehicules.stream().filter(
+							voiture -> comboBoxCouleur.getSelectedItem().toString().equals(voiture.getCouleur()))
+							.collect(Collectors.toList());
+
+					table.setModel(listeVehicule(vehiculesFiltered));
+				} else {
+					vehiculesFiltered = vehicules;
+					table.setModel(listeVehicule(vehiculesFiltered));
+				}
+			}
+		});
+		
+		comboBoxCarburant.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (comboBoxCarburant.getSelectedIndex() != 0) {
+					vehiculesFiltered = (ArrayList<Vehicule>) vehicules.stream().filter(
+							voiture -> comboBoxCarburant.getSelectedItem().toString().equals(voiture.getCarburant()))
+							.collect(Collectors.toList());
+
+					table.setModel(listeVehicule(vehiculesFiltered));
+				} else {
+					vehiculesFiltered = vehicules;
+					table.setModel(listeVehicule(vehiculesFiltered));
+				}
+			}
+		});
 		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -291,24 +355,25 @@ public class AffichagePrincipale extends JPanel {
 					Inscription login = new Inscription();
 					login.setVisible(true);
 				} else {
-					ShowLocation showFacture = new ShowLocation(vehiculeSelected,nbreJoursLocation,selectedStartDate, selectedEndDate,lblPrixLocation.getText());
+					ShowLocation showFacture = new ShowLocation(vehiculeSelected, nbreJoursLocation, selectedStartDate,
+							selectedEndDate, lblPrixLocation.getText());
 					showFacture.setVisible(true);
 				}
 			}
 		});
-		
+
 		textSearch.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode()==KeyEvent.VK_ENTER) {
-					vehiculesFiltered= (ArrayList<Vehicule>) vehicules.stream()
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					vehiculesFiltered = (ArrayList<Vehicule>) vehicules.stream()
 							.filter(voiture -> (voiture.getCategorie().contains(textSearch.getText())
-									 || voiture.getCouleur().contains(textSearch.getText())
-									 || voiture.getCarburant().contains(textSearch.getText())
-									 || voiture.getDescription().contains(textSearch.getText())
-									 || voiture.getMarque().contains(textSearch.getText())
-									 || voiture.getModele_vehicule().contains(textSearch.getText())
-									 || voiture.getOptions().contains(textSearch.getText())))
+									|| voiture.getCouleur().contains(textSearch.getText())
+									|| voiture.getCarburant().contains(textSearch.getText())
+									|| voiture.getDescription().contains(textSearch.getText())
+									|| voiture.getMarque().contains(textSearch.getText())
+									|| voiture.getModele_vehicule().contains(textSearch.getText())
+									|| voiture.getOptions().contains(textSearch.getText())))
 							.collect(Collectors.toList());
 
 					table.setModel(listeVehicule(vehiculesFiltered));
