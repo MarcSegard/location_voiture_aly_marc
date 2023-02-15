@@ -1,5 +1,6 @@
 package vue;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -19,7 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -31,11 +31,13 @@ import model.Vehicule;
 public class UpdateCreatVehicule extends JFrame {
 	private VehiculeDao vehiculeDao = new VehiculeDao();
 	private String tempo;
-	JProgressBar progress;
+	private Vehicule imat;
+	private String cheminOrigine;
+	private JLabel lbl_vehicule_view;
+	private String imgRetour = null;
 	/**
 	 * 
 	 */
-
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	public static int nbrFenetre = 0;
@@ -51,21 +53,21 @@ public class UpdateCreatVehicule extends JFrame {
 	 */
 	public UpdateCreatVehicule() {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		setBounds(100, 100, 800, 700);
+		setTitle("Gestion des Vehicules");
+		setBounds(100, 100, 798, 601);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lbl_vehicule_view = new JLabel("");
+		lbl_vehicule_view = new JLabel(
+				new ImageIcon(new ImageIcon("src/assets/images/petite_citadine/smart_mercedes.png").getImage()
+						.getScaledInstance(400, 250, java.awt.Image.SCALE_SMOOTH)));
 		lbl_vehicule_view.setToolTipText("<html>" + "Download!" + " " + "here" + "</html>");
 		getContentPane().add(lbl_vehicule_view);
-
 		lbl_vehicule_view.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_vehicule_view.setIcon(new ImageIcon(
-				UpdateCreatVehicule.class.getResource("/assets/images/petite_citadine/smart_mercedes.png")));
-		lbl_vehicule_view.setBounds(352, 10, 415, 239);
+		lbl_vehicule_view.setBounds(249, 10, 518, 250);
 		contentPane.add(lbl_vehicule_view);
 		//
 		ArrayList<String> categories = vehiculeDao.getCategorie();
@@ -101,14 +103,15 @@ public class UpdateCreatVehicule extends JFrame {
 		contentPane.add(comboBox_carburant);
 		//
 		ArrayList<String> matricules = vehiculeDao.getImmatriculation();
-		 matricules.add(0, "*********");
-		String[]  matriculesToCombo =  matricules.toArray(new String[ matricules.size()]);
-		JComboBox comboBox_imat_shearch = new JComboBox( matriculesToCombo);
-		comboBox_imat_shearch.setBounds(10, 55, 195, 21);
+		matricules.add(0, "*********");
+		String[] matriculesToCombo = matricules.toArray(new String[matricules.size()]);
+		JComboBox comboBox_imat_shearch = new JComboBox(matriculesToCombo);
+		comboBox_imat_shearch.setBounds(10, 142, 195, 21);
 		contentPane.add(comboBox_imat_shearch);
-		
+
 		JLabel lblChoixImmatiriculation = new JLabel("Choix immatiriculation");
-		lblChoixImmatiriculation.setBounds(10, 33, 149, 21);
+		lblChoixImmatiriculation.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblChoixImmatiriculation.setBounds(10, 111, 195, 21);
 		contentPane.add(lblChoixImmatiriculation);
 		//
 		JButton btn_finish = new JButton("Terminer");
@@ -118,22 +121,26 @@ public class UpdateCreatVehicule extends JFrame {
 				dispose();
 			}
 		});
-		btn_finish.setBounds(542, 640, 208, 21);
+		btn_finish.setBounds(531, 505, 208, 40);
 		contentPane.add(btn_finish);
 
 		JLabel Categ = new JLabel("Categorie");
+		Categ.setFont(new Font("Tahoma", Font.BOLD, 14));
 		Categ.setBounds(10, 259, 97, 21);
 		contentPane.add(Categ);
 
 		JLabel lblMarque = new JLabel("Marque");
+		lblMarque.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblMarque.setBounds(10, 310, 97, 21);
 		contentPane.add(lblMarque);
 
 		JLabel lbl_model = new JLabel("Modèle");
+		lbl_model.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbl_model.setBounds(559, 259, 97, 21);
 		contentPane.add(lbl_model);
 
 		JLabel lbl_carbu = new JLabel("Carburant");
+		lbl_carbu.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbl_carbu.setBounds(562, 310, 97, 21);
 		contentPane.add(lbl_carbu);
 
@@ -147,60 +154,70 @@ public class UpdateCreatVehicule extends JFrame {
 		couleur_input.setBounds(299, 330, 195, 19);
 		contentPane.add(couleur_input);
 
-		JLabel lbl_kilometre = new JLabel("Kilométrage");
+		JLabel lbl_kilometre = new JLabel("Kilométrage :");
+		lbl_kilometre.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbl_kilometre.setBounds(299, 259, 97, 21);
 		contentPane.add(lbl_kilometre);
 
 		JLabel lbl_couleur = new JLabel("Couleurs");
+		lbl_couleur.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbl_couleur.setBounds(299, 310, 97, 21);
 		contentPane.add(lbl_couleur);
+		/*
+		 * image_chemin_update_input = new JTextField();
+		 * image_chemin_update_input.setColumns(10);
+		 * image_chemin_update_input.setBounds(10, 432, 484, 19);
+		 * contentPane.add(image_chemin_update_input);
+		 */
 
-		image_chemin_update_input = new JTextField();
-		image_chemin_update_input.setColumns(10);
-		image_chemin_update_input.setBounds(10, 432, 484, 19);
-		contentPane.add(image_chemin_update_input);
-
-		JLabel lbl_chemin_orgine = new JLabel("Image");
-		lbl_chemin_orgine.setBounds(10, 411, 97, 21);
-		contentPane.add(lbl_chemin_orgine);
+		/*
+		 * JLabel lbl_chemin_orgine = new JLabel("Image");
+		 * lbl_chemin_orgine.setBounds(10, 411, 97, 21);
+		 * contentPane.add(lbl_chemin_orgine);
+		 */
 
 		Prix_unitaire_input = new JTextField();
 		Prix_unitaire_input.setColumns(10);
-		Prix_unitaire_input.setBounds(662, 432, 105, 19);
+		Prix_unitaire_input.setBounds(662, 382, 105, 19);
 		contentPane.add(Prix_unitaire_input);
 
-		JLabel lbl_Prix = new JLabel("Prix");
-		lbl_Prix.setBounds(645, 411, 84, 21);
+		JLabel lbl_Prix = new JLabel("Prix :");
+		lbl_Prix.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lbl_Prix.setBounds(662, 359, 84, 21);
 		contentPane.add(lbl_Prix);
 
 		Immatriculation_input = new JTextField();
 		Immatriculation_input.setText("TW-004-AA");
 		Immatriculation_input.setColumns(10);
-		Immatriculation_input.setBounds(10, 382, 105, 19);
+		Immatriculation_input.setBounds(10, 382, 121, 19);
 		contentPane.add(Immatriculation_input);
 
-		JLabel lbl_Immatriculation = new JLabel("Immatriculation");
-		lbl_Immatriculation.setBounds(10, 359, 84, 21);
+		JLabel lbl_Immatriculation = new JLabel("Immatriculation :");
+		lbl_Immatriculation.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lbl_Immatriculation.setBounds(10, 359, 127, 21);
 		contentPane.add(lbl_Immatriculation);
 
 		input_option = new JTextField();
 		input_option.setColumns(10);
-		input_option.setBounds(299, 382, 468, 19);
+		input_option.setBounds(200, 382, 358, 19);
 		contentPane.add(input_option);
 
-		JLabel lbl_Option = new JLabel("Option");
-		lbl_Option.setBounds(299, 359, 84, 21);
+		JLabel lbl_Option = new JLabel("Option :");
+		lbl_Option.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lbl_Option.setBounds(200, 359, 84, 21);
 		contentPane.add(lbl_Option);
 
 		JTextArea Descript_input = new JTextArea();
 		Descript_input.setText("Description");
-		Descript_input.setBounds(10, 492, 757, 90);
+		Descript_input.setBounds(10, 429, 757, 54);
 		contentPane.add(Descript_input);
 
-		JLabel lbl_Description = new JLabel("Descriptions");
+		JLabel lbl_Description = new JLabel("Descriptions :");
+		lbl_Description.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbl_Description.setLabelFor(Descript_input);
-		lbl_Description.setBounds(10, 471, 84, 21);
+		lbl_Description.setBounds(10, 411, 105, 21);
 		contentPane.add(lbl_Description);
+		JButton btn_create = new JButton("Create");
 		//
 		kilometreage_input.addKeyListener(new KeyAdapter() {
 			@Override
@@ -224,29 +241,42 @@ public class UpdateCreatVehicule extends JFrame {
 		//
 		comboBox_imat_shearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				String box =comboBox_imat_shearch.getSelectedItem().toString();
-				
-				Vehicule imat =vehiculeDao.findByImmatriculation(box);
-				System.out.println(imat.getDescription());
-				
-				comboBox_categorie.setSelectedItem(imat.getCategorie());
-				System.out.println(imat.getCategorie());
-				comboBox_model.setSelectedItem(imat.getModele_vehicule());
-				comboBox_marque.setSelectedItem(imat.getMarque());
-				comboBox_carburant.setSelectedItem(imat.getCarburant());
-				lbl_vehicule_view.setIcon(new ImageIcon(AffichagePrincipale.class.getResource(imat.getChemin_image())));
-				Prix_unitaire_input.setText(String.valueOf(imat.getPrix()));
-				Descript_input.setText(imat.getDescription());
-				input_option.setText(imat.getOptions());
-				Immatriculation_input.setText(imat.getImmatriculation());
-				couleur_input.setText(imat.getCouleur());
-				kilometreage_input.setText(String.valueOf(imat.getKilometrage()));
-				
+				if (comboBox_imat_shearch.getSelectedIndex() != 0) {
+					btn_create.setText("Update");
+					Immatriculation_input.setEditable(false);
+
+					String box = comboBox_imat_shearch.getSelectedItem().toString();
+					imat = vehiculeDao.findByImmatriculation(box);
+
+					comboBox_categorie.setSelectedItem(imat.getCategorie());
+					System.out.println(imat.getCategorie());
+					comboBox_model.setSelectedItem(imat.getModele_vehicule());
+					comboBox_marque.setSelectedItem(imat.getMarque());
+					comboBox_carburant.setSelectedItem(imat.getCarburant());
+
+					lbl_vehicule_view.setIcon(
+							new ImageIcon(new ImageIcon(AffichagePrincipale.class.getResource(imat.getChemin_image()))
+									.getImage().getScaledInstance(400, 250, java.awt.Image.SCALE_SMOOTH)));
+
+					Prix_unitaire_input.setText(String.valueOf(imat.getPrix()));
+					Descript_input.setText(imat.getDescription());
+					input_option.setText(imat.getOptions());
+					Immatriculation_input.setText(imat.getImmatriculation());
+					couleur_input.setText(imat.getCouleur());
+					kilometreage_input.setText(String.valueOf(imat.getKilometrage()));
+					tempo = imat.getChemin_image();
+					
+					cheminOrigine = tempo;
+				} else {
+					btn_create.setText("Create");
+					Immatriculation_input.setEditable(true);
+					System.out.println(comboBox_imat_shearch.getSelectedIndex());
+
+				}
 			}
+
 		});
 		//
-		JButton btn_create = new JButton("Create");
 		btn_create.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// CREATION DU VEHICULE UPDATE
@@ -257,37 +287,67 @@ public class UpdateCreatVehicule extends JFrame {
 						|| comboBox_marque.getSelectedItem().toString().length() == 0
 						|| comboBox_marque.getSelectedItem().toString().length() == 0
 						|| comboBox_model.getSelectedItem().toString().length() == 0 || tempo.length() == 0) {
-					JOptionPane.showMessageDialog(null, "Impossible! Veuillez remplire les champs ", null,
+					JOptionPane.showMessageDialog(null, "Impossible!! Veuillez remplire les champs ", null,
 							JOptionPane.ERROR_MESSAGE);
 
 				} else {
-					Vehicule vehi = new Vehicule(couleur_input.getText(),
-							Float.parseFloat(Prix_unitaire_input.getText().toString()), Immatriculation_input.getText().toString(),
-							Descript_input.getText(), Double.parseDouble(kilometreage_input.getText().toString()),
-							input_option.getText(), "ABIS", comboBox_categorie.getSelectedItem().toString(),
-							comboBox_carburant.getSelectedItem().toString(),
-							comboBox_marque.getSelectedItem().toString(), comboBox_model.getSelectedItem().toString(),
-							tempo.toString());
-					System.out.println(vehi.getCouleur() + " " + vehi.getPrix() + " " + vehi.getImmatriculation() + " "
-							+ vehi.getDescription() + " " + vehi.getKilometrage() + " " + vehi.getOptions() + " "
-							+ vehi.getCategorie() + " " + vehi.getCarburant() + " " + vehi.getMarque() + " "
-							+ vehi.getModele_vehicule() + " " + vehi.getChemin_image().toString());
-					
-					if (vehiculeDao.create(vehi)) {
-						JOptionPane.showMessageDialog(null, "Bravo, compte créé");
-						ImprimeVhculeShow vhculeShow = new ImprimeVhculeShow();
-						vhculeShow.setVisible(true);
+					if (comboBox_imat_shearch.getSelectedIndex() == 0) {
+
+						Vehicule vehi = new Vehicule(couleur_input.getText(),
+								Float.parseFloat(Prix_unitaire_input.getText().toString()),
+								Immatriculation_input.getText().toString(), Descript_input.getText(),
+								Double.parseDouble(kilometreage_input.getText().toString()), input_option.getText(),
+								"ABIS", comboBox_categorie.getSelectedItem().toString(),
+								comboBox_carburant.getSelectedItem().toString(),
+								comboBox_marque.getSelectedItem().toString(),
+								comboBox_model.getSelectedItem().toString(), tempo.toString());
+
+						/*System.out.println(vehi.getCouleur() + " " + vehi.getPrix() + " " + vehi.getImmatriculation()
+								+ " " + vehi.getDescription() + " " + vehi.getKilometrage() + " " + vehi.getOptions()
+								+ " " + vehi.getCategorie() + " " + vehi.getCarburant() + " " + vehi.getMarque() + " "
+								+ vehi.getModele_vehicule() + " " + vehi.getChemin_image().toString());*/
+
+						if (vehiculeDao.create(vehi)) {
+							JOptionPane.showMessageDialog(null, "Bravo, Vehicule a bien été créé.");
+							ImprimeVhculeShow vhculeShow = new ImprimeVhculeShow(vehi, imgRetour);
+							vhculeShow.setVisible(true);
+
+						} else {
+							JOptionPane.showMessageDialog(null, "Oups!! Erreur lors de l'insertion.");
+						}
 
 					} else {
-						JOptionPane.showMessageDialog(null, "OUPS, erreur lors de l'insertion");
-					}
+						JOptionPane.showMessageDialog(null, "Mise a jours Vehicule a bien été effectuer.");
+						imat.setCouleur(couleur_input.getText());
+						imat.setPrix(Float.parseFloat(Prix_unitaire_input.getText().toString()));
+						imat.setImmatriculation(Immatriculation_input.getText().toString());
+						imat.setDescription(Descript_input.getText());
+						imat.setKilometrage(Double.parseDouble(kilometreage_input.getText().toString()));
+						imat.setOptions(input_option.getText());
+						imat.setCategorie(comboBox_categorie.getSelectedItem().toString());
+						imat.setCarburant(comboBox_carburant.getSelectedItem().toString());
+						imat.setMarque(comboBox_marque.getSelectedItem().toString());
+						imat.setModele_vehicule(comboBox_model.getSelectedItem().toString());
+						imat.setChemin_image(tempo.toString());
+						int idImage = vehiculeDao.getIdImage(cheminOrigine);
+						System.out.println(" chemin " + imat.getChemin_image());
+						System.out.println(" chemin_tempo " + tempo.toString());
+						if (idImage == -1) {
+							JOptionPane.showMessageDialog(null, "Impossible!! Probleme id image.  ", null,
+									JOptionPane.ERROR_MESSAGE);
+						} else {
+							vehiculeDao.update(idImage, imat);
+							System.out.println("id vehicule " + imat.getId());
 
+						}
+
+					}
 				}
 			}
 		});
-		btn_create.setBounds(254, 640, 208, 21);
+		btn_create.setBounds(10, 505, 195, 40);
 		contentPane.add(btn_create);
-		
+
 		lbl_vehicule_view.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -297,6 +357,7 @@ public class UpdateCreatVehicule extends JFrame {
 				// RECUPERATION DU FILCHIER SELECTIONNER
 				File fileSelected = file.getSelectedFile();
 				String chemin = fileSelected.getAbsolutePath();
+				System.out.println("chemin*****" + chemin);
 				String destination = "src/assets/images/" + comboBox_categorie.getSelectedItem().toString() + "/"
 						+ file.getSelectedFile().getName();
 				File source = new File(chemin);
@@ -308,6 +369,8 @@ public class UpdateCreatVehicule extends JFrame {
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
+				imgRetour = chemin.replace("/\\/g", "\\\\");
+				lbl_vehicule_view.setIcon(new ImageIcon(imgRetour));
 			}
 		});
 	}
