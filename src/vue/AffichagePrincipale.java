@@ -365,17 +365,25 @@ public class AffichagePrincipale extends JPanel {
 		textSearch.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
+				ArrayList<Vehicule> vehiculesFilteredSearch = new ArrayList<>();
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					vehiculesFiltered = (ArrayList<Vehicule>) vehicules.stream()
-							.filter(voiture -> (voiture.getCategorie().contains(textSearch.getText())
-									|| voiture.getCouleur().contains(textSearch.getText())
-									|| voiture.getCarburant().contains(textSearch.getText())
-									|| voiture.getDescription().contains(textSearch.getText())
-									|| voiture.getMarque().contains(textSearch.getText())
-									|| voiture.getModele_vehicule().contains(textSearch.getText())
-									|| voiture.getOptions().contains(textSearch.getText())))
-							.collect(Collectors.toList());
+					String[] words = textSearch.getText().split(" ");
 
+					for (Vehicule voiture : vehicules) {
+						boolean found= true;
+						String params = voiture.getCategorie().concat(" " + voiture.getCouleur())
+								.concat(" " + voiture.getOptions()).concat(" " + voiture.getCarburant())
+								.concat(" " + voiture.getModele_vehicule()).concat(" " + voiture.getDescription())
+								.concat(" " + voiture.getMarque());
+						for (String word : words) {
+							found  &= params.contains(word);
+						}
+						
+						if (found) {
+							vehiculesFilteredSearch.add(voiture);
+						}
+					}
+					vehiculesFiltered = vehiculesFilteredSearch;
 					table.setModel(listeVehicule(vehiculesFiltered));
 				}
 			}
