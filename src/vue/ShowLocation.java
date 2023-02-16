@@ -66,6 +66,7 @@ public class ShowLocation extends JDialog {
 		getContentPane().add(lblNewLabel);
 		
 		JButton btnNewButton = new JButton("Confirmer la location");
+
 		btnNewButton.setBounds(177, 247, 196, 29);
 		getContentPane().add(btnNewButton);
 		
@@ -132,5 +133,23 @@ public class ShowLocation extends JDialog {
 				}
 			}
 		});
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (vehiculeDao.createLocation(vehicule, UserDao.currentUser.getId(), comboBoxTypePaiement.getSelectedItem().toString(),Float.parseFloat(montant.replace(",",".")),start,end)) {
+				System.out.println("Insertion facture Ok");
+				}else {
+					System.out.println("Insertion Nok !!!");
+				}
+				
+			}
+		});
+		
+		
+		System.out.println("id_client : " + UserDao.currentUser.getId());
+		System.out.println("id_vehicule : " + vehicule.getId());
+		
+		
+		
 	}
 }
