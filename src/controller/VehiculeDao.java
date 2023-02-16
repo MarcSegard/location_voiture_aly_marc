@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import model.Vehicule;
 import myConnection.Connect;
@@ -99,7 +100,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 		}
 		return null;
 	}
-	
+
 	public ArrayList<String> getMoyenPaiement() {
 		ArrayList<String> paiements = new ArrayList<>();
 		try {
@@ -163,7 +164,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 		}
 		return null;
 	}
-	
+  
 	public ArrayList<String> getImmatriculation() {
 		ArrayList<String> listimta = new ArrayList<>();
 		try {
@@ -241,14 +242,69 @@ public class VehiculeDao implements IDao<Vehicule> {
 				vehicule = new Vehicule(rs.getInt("id_vehicule"), rs.getString("couleur_vehicule"),
 						rs.getFloat("prix_vehicule"), rs.getString("immatriculation_vehicule"),
 						rs.getDate("date_arrivee_vehicule"), rs.getString("description_vehicule"),
-						rs.getDouble("kilometrage_vehicule"), rs.getString("options_vehicule"), rs.getString("nom_agence"),
-					 rs.getString("nom_categorie"), rs.getString("nom_carburant"),
-						rs.getString("nom_marque"),	rs.getString("modele_vehicule"), rs.getString("chemin_image"));
+						rs.getDouble("kilometrage_vehicule"), rs.getString("options_vehicule"),
+						rs.getString("nom_agence"), rs.getString("nom_categorie"), rs.getString("nom_carburant"),
+						rs.getString("nom_marque"), rs.getString("modele_vehicule"), rs.getString("chemin_image"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Recherche non aboutie veuillez ressayer!!");
 		}
 		return vehicule;
+	}
+
+	public boolean createLocation(Vehicule vehicule, int id_client_in, String type_paiement_in,
+			float montant_facture_in, Date start_in, Date end_in) {
+		boolean check = false;
+		try {
+			int id_type_paiement = -1;
+			int id_facture = -1;
+			sql = connect.prepareStatement("SELECT id_type_paiement FROM type_paiement WHERE nom_type_paiement=?");
+			sql.setString(1, type_paiement_in);
+			rs = sql.executeQuery();
+
+			if (rs.next()) {
+				id_type_paiement = rs.getInt("id_type_paiement");
+			}
+
+			if (id_type_paiement != -1) {
+				// Insertion facture
+				sql = connect.prepareStatement(
+						"insert into facture (date_facture,montant_facture,id_type_paiement,token_paiement_facture)"
+								+ " values (now(),?,?, 'YUIBVFY87654EDF7UHGT')");
+				sql.setFloat(1, montant_facture_in);
+				sql.setInt(2, id_type_paiement);
+				sql.execute();
+
+				// Récupération de l'id de la facture crée
+				sql = connect.prepareStatement("select distinct LAST_INSERT_ID() as id from facture");
+				rs = sql.executeQuery();
+
+				if (rs.next()) {
+					id_facture = rs.getInt("id");
+				}
+
+				if (id_facture != -1) {
+					// insertion location
+					sql = connect.prepareStatement(
+							"insert into location (id_client,id_vehicule,id_facture,date_debut_location, date_fin_location)"
+									+ " values (?,?,?,?,?)");
+					sql.setInt(1, id_client_in);
+					sql.setInt(2, vehicule.getId());
+					sql.setInt(3, id_facture);
+					sql.setDate(4, new java.sql.Date(start_in.getTime()));
+					sql.setDate(5, new java.sql.Date(end_in.getTime()));
+					sql.execute();
+				}
+
+			}
+
+			check = true;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return check;
 	}
 }
