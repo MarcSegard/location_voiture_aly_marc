@@ -370,7 +370,8 @@ public class UpdateCreatVehicule extends JFrame {
 					e1.printStackTrace();
 				}
 				imgRetour = chemin.replace("/\\/g", "\\\\");
-				lbl_vehicule_view.setIcon(new ImageIcon(imgRetour));
+				lbl_vehicule_view.setIcon(
+						new ImageIcon(new ImageIcon(imgRetour).getImage().getScaledInstance(400, 250, java.awt.Image.SCALE_SMOOTH)));
 			}
 		});
 	}
