@@ -59,6 +59,13 @@ public class AffichagePrincipale extends JPanel {
 	private Vehicule vehiculeSelected = vehicules.get(0);
 	private Date selectedStartDate;
 	private Date selectedEndDate;
+	
+	
+	public void setVehiculeDao() {
+		this.vehicules= vehiculeDao.read();
+		vehiculesFiltered = vehicules;
+		table.setModel(listeVehicule(vehiculesFiltered));
+	}
 
 	/**
 	 * Create the panel.
@@ -75,6 +82,7 @@ public class AffichagePrincipale extends JPanel {
 		table.setModel(listeVehicule(vehicules));
 		table.setBackground(UIManager.getColor("Button.select"));
 		table.setForeground(UIManager.getColor("CheckBoxMenuItem.acceleratorForeground"));
+		table.setFont(new Font("Serif", Font.TYPE1_FONT, 16));
 		scrollPane.setViewportView(table);
 
 		/******************************************************/

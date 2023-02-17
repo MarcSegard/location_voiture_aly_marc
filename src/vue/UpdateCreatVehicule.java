@@ -51,7 +51,7 @@ public class UpdateCreatVehicule extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public UpdateCreatVehicule() {
+	public UpdateCreatVehicule(AffichagePrincipale affichagePrincipale) {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle("Gestion des Vehicules");
 		setBounds(100, 100, 798, 601);
@@ -342,6 +342,8 @@ public class UpdateCreatVehicule extends JFrame {
 						}
 
 					}
+					//Mise à jour données dans le composant  AffichagePrincipale
+					affichagePrincipale.setVehiculeDao();
 				}
 			}
 		});
