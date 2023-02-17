@@ -48,24 +48,7 @@ public class MainFrame extends JFrame {
 
 		JButton btnNewButton = new JButton("");
 		btnNewButton.setIcon(new ImageIcon(MainFrame.class.getResource("/assets/icones/login.png")));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (UserDao.currentUser == null) {
-					Inscription login = new Inscription();
-					login.setVisible(true);
-				}else if (UserDao.currentUser.getEmail().contains("@agence.fr")) {
-					if (UpdateCreatVehicule.nbrFenetre == 0) {
-						UpdateCreatVehicule upVehi = new  UpdateCreatVehicule();
-						upVehi.setVisible(true);
-						UpdateCreatVehicule.nbrFenetre++;
-					}
-					
-				}else{
-					// gestion utilisateur pour la connection 
-					
-				}
-			}
-		});
+
 		btnNewButton.setBounds(1389, 18, 76, 60);
 		header.add(btnNewButton);
 
@@ -85,5 +68,24 @@ public class MainFrame extends JFrame {
 		footer.setLayout(null);
 		container.repaint();
 		container.revalidate();
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (UserDao.currentUser == null) {
+					Inscription login = new Inscription();
+					login.setVisible(true);
+				}else if (UserDao.currentUser.getEmail().contains("@agence.fr")) {
+					if (UpdateCreatVehicule.nbrFenetre == 0) {
+						UpdateCreatVehicule upVehi = new  UpdateCreatVehicule(affichagePrincipale);
+						upVehi.setVisible(true);
+						UpdateCreatVehicule.nbrFenetre++;
+					}
+					
+				}else{
+					// gestion utilisateur pour la connection 
+					
+				}
+			}
+		});
 	}
 }
