@@ -7,6 +7,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -35,6 +37,7 @@ public class UpdateCreatVehicule extends JFrame {
 	private String cheminOrigine;
 	private JLabel lbl_vehicule_view;
 	private String imgRetour = null;
+	private ImprimeVhculeShow vhculeShow;
 	/**
 	 * 
 	 */
@@ -218,6 +221,7 @@ public class UpdateCreatVehicule extends JFrame {
 		lbl_Description.setBounds(10, 411, 105, 21);
 		contentPane.add(lbl_Description);
 		JButton btn_create = new JButton("Create");
+		btn_create.setEnabled(true);
 		//
 		kilometreage_input.addKeyListener(new KeyAdapter() {
 			@Override
@@ -308,9 +312,22 @@ public class UpdateCreatVehicule extends JFrame {
 								+ vehi.getModele_vehicule() + " " + vehi.getChemin_image().toString());*/
 
 						if (vehiculeDao.create(vehi)) {
-							JOptionPane.showMessageDialog(null, "Bravo, Vehicule a bien été créé.");
-							ImprimeVhculeShow vhculeShow = new ImprimeVhculeShow(vehi, imgRetour);
-							vhculeShow.setVisible(true);
+							if (vhculeShow.nbrFen ==0) {
+								JOptionPane.showMessageDialog(null, "Bravo, Vehicule a bien été créé.");
+								vhculeShow = new ImprimeVhculeShow(vehi, imgRetour);
+								vhculeShow.setVisible(true);
+								btn_create.setEnabled(false);
+								btn_finish.setEnabled(false);
+								vhculeShow.nbrFen++;
+								 // Désactivation des boutons btn_create / finish et attente de la fermeture de la fenêtre ImprimeVhculeShow pour réactiver les boutons
+				                vhculeShow.addWindowListener(new WindowAdapter() {
+				                    public void windowClosed(WindowEvent e) {
+				                        btn_create.setEnabled(true);
+				                        btn_finish.setEnabled(true);
+				                    }
+				                });
+							}
+							
 
 						} else {
 							JOptionPane.showMessageDialog(null, "Oups!! Erreur lors de l'insertion.");
