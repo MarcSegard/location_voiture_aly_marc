@@ -1,16 +1,16 @@
 package vue;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import controller.UserDao;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import controller.UserDao;
 
 public class MainFrame extends JFrame {
 
@@ -68,21 +68,30 @@ public class MainFrame extends JFrame {
 		footer.setLayout(null);
 		container.repaint();
 		container.revalidate();
-		
+
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (UserDao.currentUser == null) {
 					Inscription login = new Inscription();
 					login.setVisible(true);
-				}else if (UserDao.currentUser.getEmail().contains("@agence.fr")) {
+				} else if (UserDao.currentUser.getEmail().contains("@agence.fr")) {
 					if (UpdateCreatVehicule.nbrFenetre == 0) {
-						UpdateCreatVehicule upVehi = new  UpdateCreatVehicule(affichagePrincipale);
+						UpdateCreatVehicule upVehi = new UpdateCreatVehicule(affichagePrincipale);
 						upVehi.setVisible(true);
 						UpdateCreatVehicule.nbrFenetre++;
 					}
+
+				} else {
+					// gestion utilisateur pour la connection
+					int choix = JOptionPane.showOptionDialog(null, "Que souhaitez-vous faire ?",
+							"utilisateur avant modification :", JOptionPane.DEFAULT_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null,
+							new Object[] { "Continuer", "Modifier/Supprimer mon compte" }, null);
+					if (choix == 1) {
+						ModificationSuppressionUser modSupUser = new ModificationSuppressionUser(UserDao.currentUser);
+						modSupUser.setVisible(true);
+					}
 					
-				}else{
-					// gestion utilisateur pour la connection 
 					
 				}
 			}

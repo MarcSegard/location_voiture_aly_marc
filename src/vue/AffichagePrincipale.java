@@ -59,10 +59,9 @@ public class AffichagePrincipale extends JPanel {
 	private Vehicule vehiculeSelected = vehicules.get(0);
 	private Date selectedStartDate;
 	private Date selectedEndDate;
-	
-	
+
 	public void setVehiculeDao() {
-		this.vehicules= vehiculeDao.read();
+		this.vehicules = vehiculeDao.read();
 		vehiculesFiltered = vehicules;
 		table.setModel(listeVehicule(vehiculesFiltered));
 	}
@@ -259,12 +258,12 @@ public class AffichagePrincipale extends JPanel {
 				}
 			}
 		});
-		
+
 		comboBoxMarques.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comboBoxMarques.getSelectedIndex() != 0) {
-					vehiculesFiltered = (ArrayList<Vehicule>) vehicules.stream().filter(
-							voiture -> comboBoxMarques.getSelectedItem().toString().equals(voiture.getMarque()))
+					vehiculesFiltered = (ArrayList<Vehicule>) vehicules.stream()
+							.filter(voiture -> comboBoxMarques.getSelectedItem().toString().equals(voiture.getMarque()))
 							.collect(Collectors.toList());
 
 					table.setModel(listeVehicule(vehiculesFiltered));
@@ -274,7 +273,7 @@ public class AffichagePrincipale extends JPanel {
 				}
 			}
 		});
-		
+
 		comboBoxModele.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comboBoxModele.getSelectedIndex() != 0) {
@@ -289,7 +288,7 @@ public class AffichagePrincipale extends JPanel {
 				}
 			}
 		});
-		
+
 		comboBoxCouleur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comboBoxCouleur.getSelectedIndex() != 0) {
@@ -304,7 +303,7 @@ public class AffichagePrincipale extends JPanel {
 				}
 			}
 		});
-		
+
 		comboBoxCarburant.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (comboBoxCarburant.getSelectedIndex() != 0) {
@@ -319,7 +318,7 @@ public class AffichagePrincipale extends JPanel {
 				}
 			}
 		});
-		
+
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -378,15 +377,15 @@ public class AffichagePrincipale extends JPanel {
 					String[] words = textSearch.getText().split(" ");
 
 					for (Vehicule voiture : vehicules) {
-						boolean found= true;
+						boolean found = true;
 						String params = voiture.getCategorie().concat(" " + voiture.getCouleur())
 								.concat(" " + voiture.getOptions()).concat(" " + voiture.getCarburant())
 								.concat(" " + voiture.getModele_vehicule()).concat(" " + voiture.getDescription())
 								.concat(" " + voiture.getMarque());
 						for (String word : words) {
-							found  &= params.contains(word);
+							found &= params.contains(word);
 						}
-						
+
 						if (found) {
 							vehiculesFilteredSearch.add(voiture);
 						}

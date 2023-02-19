@@ -46,7 +46,7 @@ public class UpdateCreatVehicule extends JFrame {
 	public static int nbrFenetre = 0;
 	private JTextField kilometreage_input;
 	private JTextField couleur_input;
-	private JTextField image_chemin_update_input;
+	// private JTextField image_chemin_update_input;
 	private JTextField Prix_unitaire_input;
 	private JTextField Immatriculation_input;
 	private JTextField input_option;
@@ -269,7 +269,7 @@ public class UpdateCreatVehicule extends JFrame {
 					couleur_input.setText(imat.getCouleur());
 					kilometreage_input.setText(String.valueOf(imat.getKilometrage()));
 					tempo = imat.getChemin_image();
-					
+
 					cheminOrigine = tempo;
 				} else {
 					btn_create.setText("Create");
@@ -306,28 +306,31 @@ public class UpdateCreatVehicule extends JFrame {
 								comboBox_marque.getSelectedItem().toString(),
 								comboBox_model.getSelectedItem().toString(), tempo.toString());
 
-						/*System.out.println(vehi.getCouleur() + " " + vehi.getPrix() + " " + vehi.getImmatriculation()
-								+ " " + vehi.getDescription() + " " + vehi.getKilometrage() + " " + vehi.getOptions()
-								+ " " + vehi.getCategorie() + " " + vehi.getCarburant() + " " + vehi.getMarque() + " "
-								+ vehi.getModele_vehicule() + " " + vehi.getChemin_image().toString());*/
+						/*
+						 * System.out.println(vehi.getCouleur() + " " + vehi.getPrix() + " " +
+						 * vehi.getImmatriculation() + " " + vehi.getDescription() + " " +
+						 * vehi.getKilometrage() + " " + vehi.getOptions() + " " + vehi.getCategorie() +
+						 * " " + vehi.getCarburant() + " " + vehi.getMarque() + " " +
+						 * vehi.getModele_vehicule() + " " + vehi.getChemin_image().toString());
+						 */
 
 						if (vehiculeDao.create(vehi)) {
-							if (vhculeShow.nbrFen ==0) {
+							if (vhculeShow.nbrFen == 0) {
 								JOptionPane.showMessageDialog(null, "Bravo, Vehicule a bien été créé.");
 								vhculeShow = new ImprimeVhculeShow(vehi, imgRetour);
 								vhculeShow.setVisible(true);
 								btn_create.setEnabled(false);
 								btn_finish.setEnabled(false);
 								vhculeShow.nbrFen++;
-								 // Désactivation des boutons btn_create / finish et attente de la fermeture de la fenêtre ImprimeVhculeShow pour réactiver les boutons
-				                vhculeShow.addWindowListener(new WindowAdapter() {
-				                    public void windowClosed(WindowEvent e) {
-				                        btn_create.setEnabled(true);
-				                        btn_finish.setEnabled(true);
-				                    }
-				                });
+								// Désactivation des boutons btn_create / finish et attente de la fermeture de
+								// la fenêtre ImprimeVhculeShow pour réactiver les boutons
+								vhculeShow.addWindowListener(new WindowAdapter() {
+									public void windowClosed(WindowEvent e) {
+										btn_create.setEnabled(true);
+										btn_finish.setEnabled(true);
+									}
+								});
 							}
-							
 
 						} else {
 							JOptionPane.showMessageDialog(null, "Oups!! Erreur lors de l'insertion.");
@@ -355,11 +358,9 @@ public class UpdateCreatVehicule extends JFrame {
 						} else {
 							vehiculeDao.update(idImage, imat);
 							System.out.println("id vehicule " + imat.getId());
-
 						}
-
 					}
-					//Mise à jour données dans le composant  AffichagePrincipale
+					// Mise à jour données dans le composant AffichagePrincipale
 					affichagePrincipale.setVehiculeDao();
 				}
 			}
@@ -389,8 +390,8 @@ public class UpdateCreatVehicule extends JFrame {
 					e1.printStackTrace();
 				}
 				imgRetour = chemin.replace("/\\/g", "\\\\");
-				lbl_vehicule_view.setIcon(
-						new ImageIcon(new ImageIcon(imgRetour).getImage().getScaledInstance(400, 250, java.awt.Image.SCALE_SMOOTH)));
+				lbl_vehicule_view.setIcon(new ImageIcon(
+						new ImageIcon(imgRetour).getImage().getScaledInstance(400, 250, java.awt.Image.SCALE_SMOOTH)));
 			}
 		});
 	}
