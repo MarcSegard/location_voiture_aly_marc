@@ -66,8 +66,8 @@ public class UserDao implements IDao<User> {
 			rs = sql.executeQuery();
 
 			if (rs.next()) {
-				currentUser = new User(rs.getString("nom_client"), rs.getString("prenom_client"), rs.getString("email_client"),
-						rs.getString("permis_client"), rs.getInt("id_client"));
+				currentUser = new User(rs.getString("nom_client"), rs.getString("prenom_client"),
+						rs.getString("email_client"), rs.getString("permis_client"), rs.getInt("id_client"));
 				return currentUser;
 			}
 		} catch (SQLException e) {
@@ -75,4 +75,34 @@ public class UserDao implements IDao<User> {
 		}
 		return null;
 	}
+
+	public boolean update(User user) {
+		try {
+			sql = connect.prepareStatement(
+					"UPDATE client SET email_client = ?, password_client = PASSWORD(?) WHERE id_client = ?");
+			sql.setString(1, user.getEmail());
+			sql.setString(2, user.getPassword());
+			sql.setInt(3, user.getId());
+			sql.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	
+
+	public boolean delete(User user) {
+		try {
+			sql = connect.prepareStatement("delete from client where id_client=?");
+			sql.setInt(1, user.getId());
+			int userDelet = sql.executeUpdate();
+			return userDelet > 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }
