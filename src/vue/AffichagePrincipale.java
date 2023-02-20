@@ -387,10 +387,8 @@ public class AffichagePrincipale extends JPanel {
 				}
 
 				if (nbreJoursLocation < 0 || nbreJoursLocation == 0) {
-					// model2.setDate(datePanel.getModel().getYear(),
-					// datePanel.getModel().getMonth(),
-					// datePanel.getModel().getDay() + 1);
-
+					model2.setDate(datePanel.getModel().getYear(), datePanel.getModel().getMonth(),
+							datePanel.getModel().getDay() + 1);
 				}
 
 				miseAJourPrixLocation(lblPrixLocation);

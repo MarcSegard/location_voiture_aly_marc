@@ -116,7 +116,7 @@ public class ModificationSuppressionUser extends JFrame {
 					if (!matcherEmail.find()) {
 						JOptionPane.showMessageDialog(null, "Vérifier le format de votre email", "Oups",
 								JOptionPane.ERROR_MESSAGE);
-					} else if (ucM.checkEmailIsExist(newEmail)) {
+					} else if (ucM.checkEmailIsExist(newEmail) && !user.getEmail().equals(newEmail)) {
 						JOptionPane.showMessageDialog(null, "Votre mail existe déjà, veuillez en choisir un autre.",
 								"Oups", JOptionPane.ERROR_MESSAGE);
 					} else if (newEmail.contains("agence.fr")) {
@@ -124,18 +124,13 @@ public class ModificationSuppressionUser extends JFrame {
 								JOptionPane.ERROR_MESSAGE);
 
 					} else if (email_user.getText().length() != 0 || password_user.getText().length() != 0) {
-						//JOptionPane.showMessageDialog(null, "Aucun champ ne doit pas être vide", "Oups",
-							//	JOptionPane.ERROR_MESSAGE);
-					} else {
-
 						// Mettre à jour l'utilisateur avec les nouvelles valeurs
 						System.out.println("Update OK");
 						user.setEmail(newEmail);
 						user.setPassword(newPassword);
 						// Appeler la méthode update de UserDao pour mettre à jour l'utilisateur
-						UserDao userDao = new UserDao();
 						// userDao.update(user);
-						if (userDao.update(user)) {
+						if (ucM.update(user)) {
 							JOptionPane.showMessageDialog(null, "L'utilisateur a bien été modifier", "Bravo",
 									JOptionPane.INFORMATION_MESSAGE);
 							UserDao.currentUser = user;
@@ -159,8 +154,7 @@ public class ModificationSuppressionUser extends JFrame {
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				if (confirmation == JOptionPane.YES_OPTION) {
 					// Appeler la méthode delete de UserDao pour supprimer l'utilisateur courant
-					UserDao userDao = new UserDao();
-					userDao.delete(user);
+					ucM.delete(user);
 
 					// Fermer la fenêtre
 					dispose();
