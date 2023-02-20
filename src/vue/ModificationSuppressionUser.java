@@ -34,7 +34,7 @@ public class ModificationSuppressionUser extends JFrame {
 	 * Create the frame.
 	 */
 	public ModificationSuppressionUser(User user) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 400, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -110,6 +110,7 @@ public class ModificationSuppressionUser extends JFrame {
 				newEmail = email_user.getText();
 				newPassword = String.valueOf(password_user.getText());
 				matcherEmail = patternEmail.matcher(newEmail);
+				
 				// Si l'utilisateur clique sur "oui"
 				if (choice == JOptionPane.YES_OPTION) {
 					if (!matcherEmail.find()) {
@@ -122,9 +123,9 @@ public class ModificationSuppressionUser extends JFrame {
 						JOptionPane.showMessageDialog(null, "Bien tenté !!!!", "Halte aux pirates",
 								JOptionPane.ERROR_MESSAGE);
 
-					} else if (email_user.getText().length() == 0 || password_user.getText().length() == 0) {
-						JOptionPane.showMessageDialog(null, "Aucun champ ne doit pas être vide", "Oups",
-								JOptionPane.ERROR_MESSAGE);
+					} else if (email_user.getText().length() != 0 || password_user.getText().length() != 0) {
+						//JOptionPane.showMessageDialog(null, "Aucun champ ne doit pas être vide", "Oups",
+							//	JOptionPane.ERROR_MESSAGE);
 					} else {
 
 						// Mettre à jour l'utilisateur avec les nouvelles valeurs
