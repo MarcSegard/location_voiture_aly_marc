@@ -181,26 +181,6 @@ public class VehiculeDao implements IDao<Vehicule> {
 		return null;
 	}
 
-	public int getIdImage(String chemin_in) {
-		int imageid = -1;
-		try {
-			sql = connect.prepareStatement("SELECT id_image FROM image WHERE chemin_image = ?");
-
-			sql.setString(1, chemin_in);
-			rs = sql.executeQuery();
-			System.out.println("je suis getId");
-			while (rs.next()) {
-				imageid = rs.getInt("id_image");
-
-				System.out.println(imageid + " id image trouver ");
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return imageid;
-	}
-
 	public boolean update(int id_image, Vehicule vehicule) {
 		try {
 			sql = connect.prepareStatement("{call updateVehicule(?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?)}");
@@ -305,5 +285,25 @@ public class VehiculeDao implements IDao<Vehicule> {
 		}
 
 		return check;
+	}
+
+	public int getIdImage(String chemin_in) {
+		int imageid = -1;
+		try {
+			sql = connect.prepareStatement("SELECT id_image FROM image WHERE chemin_image = ?");
+
+			sql.setString(1, chemin_in);
+			rs = sql.executeQuery();
+			System.out.println("je suis getId");
+			while (rs.next()) {
+				imageid = rs.getInt("id_image");
+
+				System.out.println(imageid + " id image trouver ");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return imageid;
 	}
 }

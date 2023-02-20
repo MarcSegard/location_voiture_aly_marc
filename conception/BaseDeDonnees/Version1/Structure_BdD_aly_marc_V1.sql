@@ -51,11 +51,7 @@ create  or replace trigger MaJ_CA_agence
  after insert on facture
 	for each row
     begin
-    select id_agence into @id_agence from agence inner join vehicule using (id_agence)
-           inner join location using (id_vehicule)
-           inner join facture using (id_facture)
-           where id_facture= NEW.id_facture;
-		update  agence set ca_agence = (select ca_agence from agence where id_agence=@id_agence) + new.montant_facture where id_agence=@id_agence;
+		update  agence set ca_agence = (select ca_agence from agence where id_agence=1) + new.montant_facture where id_agence=1;
 	end \\
 delimiter ;
 
