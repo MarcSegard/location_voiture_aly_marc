@@ -18,7 +18,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import controller.UserDao;
-import model.User;
 
 public class ModificationSuppressionUser extends JFrame {
 	private UserDao userDao = new UserDao();
@@ -70,6 +69,7 @@ public class ModificationSuppressionUser extends JFrame {
 		contentPane.add(emailLabel);
 
 		email_user = new JTextField( UserDao.currentUser.getEmail());
+		email_user.setToolTipText("<html>" + "A remplir obligatoirement  meme si vous  ne modifier pas l'email " + "</html>");
 		email_user.setBounds(100, 103, 200, 20);
 		contentPane.add(email_user);
 
@@ -79,6 +79,7 @@ public class ModificationSuppressionUser extends JFrame {
 
 		password_user = new JPasswordField( UserDao.currentUser.getPassword());
 		password_user.setBounds(100, 139, 200, 20);
+		password_user.setToolTipText("<html> A  remplire obligatoirement  meme si  vous ne modifier pas le mot de passe </html>");
 		contentPane.add(password_user);
 
 		JLabel permisLabel = new JLabel("Numéro de permis :");
