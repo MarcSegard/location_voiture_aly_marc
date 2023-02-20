@@ -10,6 +10,8 @@ import controller.UserDao;
 import controller.VehiculeDao;
 import model.Vehicule;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.text.DateFormat;
 
@@ -138,8 +140,10 @@ public class ShowLocation extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				if (vehiculeDao.createLocation(vehicule, UserDao.currentUser.getId(), comboBoxTypePaiement.getSelectedItem().toString(),Float.parseFloat(montant.replace(",",".")),start,end)) {
 				System.out.println("Insertion facture Ok");
+				dispose();
 				}else {
 					System.out.println("Insertion Nok !!!");
+					JOptionPane.showMessageDialog(null, "Oups!! Erreur la location n'est pas effective.");
 				}
 				
 			}
