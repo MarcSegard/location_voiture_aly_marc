@@ -355,18 +355,18 @@ public class AffichagePrincipale extends JPanel {
 
 				// Si la date de début est après la date de fin
 				// La date de fin s'aligne sur la date de début plus un jour
-				if (nbreJoursLocation <0 || nbreJoursLocation == 0) {
+				if (nbreJoursLocation < 0 || nbreJoursLocation == 0) {
 					model2.setDate(datePanel.getModel().getYear(), datePanel.getModel().getMonth(),
 							datePanel.getModel().getDay() + 1);
 				}
-				
-				//Comparaison de la date sélectionnée avec la date d'aujourd'hui
-				int compareDate2 = selectedStartDate.compareTo(Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-				if (compareDate2 < 0 ) {
+
+				// Comparaison de la date sélectionnée avec la date d'aujourd'hui
+				int compareDate2 = selectedStartDate.compareTo(
+						Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+				if (compareDate2 < 0) {
 					LocalDate today = LocalDate.now();
 					model.setDate(today.getYear(), today.getMonthValue() - 1, today.getDayOfMonth());
 				}
-				
 
 				miseAJourPrixLocation(lblPrixLocation);
 			}
@@ -378,19 +378,21 @@ public class AffichagePrincipale extends JPanel {
 				selectedStartDate = (Date) datePanel.getModel().getValue();
 				selectedEndDate = (Date) datePanel2.getModel().getValue();
 				nbreJoursLocation = (int) diffDays(selectedStartDate, selectedEndDate);
-				
-				int compareDate = selectedEndDate.compareTo(Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-				if (compareDate < 0 ) {
+
+				int compareDate = selectedEndDate.compareTo(
+						Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+				if (compareDate < 0) {
 					model2.setDate(datePanel.getModel().getYear(), datePanel.getModel().getMonth(),
 							datePanel.getModel().getDay() + 1);
 				}
-				
-				if (nbreJoursLocation <0 || nbreJoursLocation == 0) {
-					//model2.setDate(datePanel.getModel().getYear(), datePanel.getModel().getMonth(),
-					//		datePanel.getModel().getDay() + 1);
-					
+
+				if (nbreJoursLocation < 0 || nbreJoursLocation == 0) {
+					// model2.setDate(datePanel.getModel().getYear(),
+					// datePanel.getModel().getMonth(),
+					// datePanel.getModel().getDay() + 1);
+
 				}
-				
+
 				miseAJourPrixLocation(lblPrixLocation);
 			}
 		});
@@ -437,8 +439,14 @@ public class AffichagePrincipale extends JPanel {
 
 		btnDeconnexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UserDao.currentUser = null;
-				JOptionPane.showMessageDialog(null, "Vous êtes déconnecté(e).", null, JOptionPane.INFORMATION_MESSAGE);
+				if (UserDao.currentUser == null) {
+					JOptionPane.showMessageDialog(null, "Pour se déconnecter il faut d'abord être connecter", null,
+							JOptionPane.ERROR_MESSAGE);
+				} else {
+					UserDao.currentUser = null;
+					JOptionPane.showMessageDialog(null, "Vous êtes déconnecté(e).", null,
+							JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 	}
