@@ -316,7 +316,7 @@ public class UpdateCreatVehicule extends JFrame {
 
 						if (vehiculeDao.create(vehi)) {
 							if (vhculeShow.nbrFen == 0) {
-								JOptionPane.showMessageDialog(null, "Bravo, Vehicule a bien été créé.");
+								//JOptionPane.showMessageDialog(null, "Bravo, Vehicule a bien été créé.");
 								vhculeShow = new ImprimeVhculeShow(vehi, imgRetour);
 								vhculeShow.setVisible(true);
 								btn_create.setEnabled(false);
