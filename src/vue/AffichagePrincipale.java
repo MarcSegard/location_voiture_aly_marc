@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -244,7 +245,7 @@ public class AffichagePrincipale extends JPanel {
 		textAreaCardViewDescription.setLineWrap(true);
 		textAreaCardViewDescription.setBounds(1032, 540, 373, 70);
 		add(textAreaCardViewDescription);
-		
+
 		JButton btnDeconnexion = new JButton("Déconnexion");
 
 		btnDeconnexion.setFont(new Font("SansSerif", Font.PLAIN, 30));
@@ -348,8 +349,26 @@ public class AffichagePrincipale extends JPanel {
 		// Mise à jour du total en fonction du nombre de jours
 		dateDebutLoc.getJFormattedTextField().addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				model2.setDate(datePanel.getModel().getYear(), datePanel.getModel().getMonth(),
-						datePanel.getModel().getDay() + 1);
+				selectedStartDate = (Date) datePanel.getModel().getValue();
+				selectedEndDate = (Date) datePanel2.getModel().getValue();
+				nbreJoursLocation = (int) diffDays(selectedStartDate, selectedEndDate);
+
+				// Si la date de début est après la date de fin
+				// La date de fin s'aligne sur la date de début plus un jour
+				if (nbreJoursLocation <0 || nbreJoursLocation == 0) {
+					model2.setDate(datePanel.getModel().getYear(), datePanel.getModel().getMonth(),
+							datePanel.getModel().getDay() + 1);
+				}
+				
+				//Comparaison de la date sélectionnée avec la date d'aujourd'hui
+				int compareDate2 = selectedStartDate.compareTo(Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+				if (compareDate2 < 0 ) {
+					LocalDate today = LocalDate.now();
+					model.setDate(today.getYear(), today.getMonthValue() - 1, today.getDayOfMonth());
+				}
+				
+
+				miseAJourPrixLocation(lblPrixLocation);
 			}
 		});
 
@@ -359,6 +378,18 @@ public class AffichagePrincipale extends JPanel {
 				selectedStartDate = (Date) datePanel.getModel().getValue();
 				selectedEndDate = (Date) datePanel2.getModel().getValue();
 				nbreJoursLocation = (int) diffDays(selectedStartDate, selectedEndDate);
+				
+				int compareDate = selectedEndDate.compareTo(Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+				if (compareDate < 0 ) {
+					model2.setDate(datePanel.getModel().getYear(), datePanel.getModel().getMonth(),
+							datePanel.getModel().getDay() + 1);
+				}
+				
+				if (nbreJoursLocation <0 || nbreJoursLocation == 0) {
+					model2.setDate(datePanel.getModel().getYear(), datePanel.getModel().getMonth(),
+							datePanel.getModel().getDay() + 1);
+				}
+				
 				miseAJourPrixLocation(lblPrixLocation);
 			}
 		});
@@ -402,12 +433,11 @@ public class AffichagePrincipale extends JPanel {
 				}
 			}
 		});
-		
+
 		btnDeconnexion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UserDao.currentUser = null;
-				JOptionPane.showMessageDialog(null, "Vous êtes déconnecté(e).", null,
-						JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Vous êtes déconnecté(e).", null, JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 	}
