@@ -1,5 +1,19 @@
 use agence_aly_marc;
 
+
+insert into client (nom_client, prenom_client, email_client, password_client, permis_client)
+values ("SEGARD", "Marc", "segardmarc@gmail.com", password("123"), "6561565267525");
+
+insert into client (nom_client, prenom_client, email_client, password_client, permis_client)
+values ("SEGARD", "Marc", "segardmarc@agence.fr", password("123"), "6561565267525");
+
+insert into client (nom_client, prenom_client, email_client, password_client, permis_client)
+values ("CISSE", "Aly", "aly@gmail.com", password("123"), "6561565267525");
+
+insert into client (nom_client, prenom_client, email_client, password_client, permis_client)
+values ("CISSE", "Aly", "aly@agence.fr", password("123"), "6561565267525");
+
+
 insert into agence (nom_agence, adresse_agence, ca_agence, SIRET_agence)
 values ("ABIS", "2 rue des Fleus Bleues 75004 Paris", 0 , "123 568 941 00056");
 

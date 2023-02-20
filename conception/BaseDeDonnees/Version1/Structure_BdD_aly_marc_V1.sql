@@ -33,10 +33,10 @@ id_type_paiement int not null, token_paiement_facture varchar(250) not null);
 
 alter table facture add constraint fk_facture_type_paiement foreign key (id_type_paiement) references type_paiement(id_type_paiement);
 
-create or replace table location (id_location int primary key auto_increment, id_client int not null, id_vehicule int not null,
+create or replace table location (id_location int primary key auto_increment, id_client int, id_vehicule int not null,
 id_facture int not null, date_debut_location date not null, date_fin_location date not null);
 
-alter table location add constraint fk_location_client foreign key (id_client) references client(id_client);
+alter table location add constraint fk_location_client foreign key (id_client) references client(id_client) ON DELETE SET NULL;
 alter table location add constraint fk_location_vehicule foreign key (id_vehicule) references vehicule(id_vehicule);
 alter table location add constraint fk_location_facture foreign key (id_facture) references facture(id_facture);
 
