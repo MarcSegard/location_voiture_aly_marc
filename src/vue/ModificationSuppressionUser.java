@@ -21,7 +21,7 @@ import controller.UserDao;
 import model.User;
 
 public class ModificationSuppressionUser extends JFrame {
-	private UserDao ucM = new UserDao();
+	private UserDao userDao = new UserDao();
 	/**
 	 * 
 	 */
@@ -33,7 +33,7 @@ public class ModificationSuppressionUser extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ModificationSuppressionUser(User user) {
+	public ModificationSuppressionUser() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 400, 300);
 		contentPane = new JPanel();
@@ -51,7 +51,7 @@ public class ModificationSuppressionUser extends JFrame {
 		nomLabel.setBounds(10, 57, 80, 14);
 		contentPane.add(nomLabel);
 
-		JLabel nomValueLabel = new JLabel(user.getNom());
+		JLabel nomValueLabel = new JLabel( UserDao.currentUser.getNom());
 		nomValueLabel.setForeground(Color.BLUE);
 		nomValueLabel.setBounds(100, 57, 200, 14);
 		contentPane.add(nomValueLabel);
@@ -60,7 +60,7 @@ public class ModificationSuppressionUser extends JFrame {
 		prenomLabel.setBounds(10, 81, 80, 14);
 		contentPane.add(prenomLabel);
 
-		JLabel prenomValueLabel = new JLabel(user.getPrenom());
+		JLabel prenomValueLabel = new JLabel( UserDao.currentUser.getPrenom());
 		prenomValueLabel.setForeground(Color.BLUE);
 		prenomValueLabel.setBounds(100, 81, 200, 14);
 		contentPane.add(prenomValueLabel);
@@ -69,7 +69,7 @@ public class ModificationSuppressionUser extends JFrame {
 		emailLabel.setBounds(10, 105, 80, 14);
 		contentPane.add(emailLabel);
 
-		email_user = new JTextField(user.getEmail());
+		email_user = new JTextField( UserDao.currentUser.getEmail());
 		email_user.setBounds(100, 103, 200, 20);
 		contentPane.add(email_user);
 
@@ -77,7 +77,7 @@ public class ModificationSuppressionUser extends JFrame {
 		passwordLabel.setBounds(10, 141, 80, 14);
 		contentPane.add(passwordLabel);
 
-		password_user = new JPasswordField(user.getPassword());
+		password_user = new JPasswordField( UserDao.currentUser.getPassword());
 		password_user.setBounds(100, 139, 200, 20);
 		contentPane.add(password_user);
 
@@ -85,7 +85,7 @@ public class ModificationSuppressionUser extends JFrame {
 		permisLabel.setBounds(10, 177, 120, 14);
 		contentPane.add(permisLabel);
 
-		JLabel permisValueLabel = new JLabel(user.getPermis());
+		JLabel permisValueLabel = new JLabel( UserDao.currentUser.getPermis());
 		permisValueLabel.setForeground(Color.BLUE);
 		permisValueLabel.setBounds(140, 177, 200, 14);
 		contentPane.add(permisValueLabel);
@@ -116,7 +116,7 @@ public class ModificationSuppressionUser extends JFrame {
 					if (!matcherEmail.find()) {
 						JOptionPane.showMessageDialog(null, "Vérifier le format de votre email", "Oups",
 								JOptionPane.ERROR_MESSAGE);
-					} else if (ucM.checkEmailIsExist(newEmail) && !user.getEmail().equals(newEmail)) {
+					} else if (userDao.checkEmailIsExist(newEmail) && ! UserDao.currentUser.getEmail().equals(newEmail)) {
 						JOptionPane.showMessageDialog(null, "Votre mail existe déjà, veuillez en choisir un autre.",
 								"Oups", JOptionPane.ERROR_MESSAGE);
 					} else if (newEmail.contains("agence.fr")) {
@@ -126,14 +126,13 @@ public class ModificationSuppressionUser extends JFrame {
 					} else if (email_user.getText().length() != 0 || password_user.getText().length() != 0) {
 						// Mettre à jour l'utilisateur avec les nouvelles valeurs
 						System.out.println("Update OK");
-						user.setEmail(newEmail);
-						user.setPassword(newPassword);
+						 UserDao.currentUser.setEmail(newEmail);
+						 UserDao.currentUser.setPassword(newPassword);
 						// Appeler la méthode update de UserDao pour mettre à jour l'utilisateur
 						// userDao.update(user);
-						if (ucM.update(user)) {
+						if (userDao.update( UserDao.currentUser)) {
 							JOptionPane.showMessageDialog(null, "L'utilisateur a bien été modifier", "Bravo",
 									JOptionPane.INFORMATION_MESSAGE);
-							UserDao.currentUser = user;
 							// Fermer la fenêtre
 							dispose();
 						} else {
@@ -154,7 +153,7 @@ public class ModificationSuppressionUser extends JFrame {
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				if (confirmation == JOptionPane.YES_OPTION) {
 					// Appeler la méthode delete de UserDao pour supprimer l'utilisateur courant
-					ucM.delete(user);
+					userDao.delete( UserDao.currentUser);
 
 					// Fermer la fenêtre
 					dispose();

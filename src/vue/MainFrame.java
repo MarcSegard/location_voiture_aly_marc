@@ -88,7 +88,7 @@ public class MainFrame extends JFrame {
 							JOptionPane.QUESTION_MESSAGE, null,
 							new Object[] { "Continuer", "Modifier/Supprimer mon compte" }, null);
 					if (choix == 1) {
-						ModificationSuppressionUser modSupUser = new ModificationSuppressionUser(UserDao.currentUser);
+						ModificationSuppressionUser modSupUser = new ModificationSuppressionUser();
 						modSupUser.setVisible(true);
 					}
 					
