@@ -38,32 +38,32 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1500, 893);
+		setBounds(100, 100, 1500, 825);
 		getContentPane().setLayout(null);
 
 		JPanel header = new JPanel();
-		header.setBounds(6, 6, 1488, 95);
+		header.setBounds(6, 6, 1488, 72);
 		getContentPane().add(header);
 		header.setLayout(null);
 
 		JButton btnNewButton = new JButton("");
 		btnNewButton.setIcon(new ImageIcon(MainFrame.class.getResource("/assets/icones/login.png")));
 
-		btnNewButton.setBounds(1389, 18, 76, 60);
+		btnNewButton.setBounds(1389, 6, 76, 60);
 		header.add(btnNewButton);
 
 		JPanel container = new JPanel();
-		container.setBounds(6, 103, 1500, 680);
+		container.setBounds(6, 85, 1500, 680);
 		getContentPane().add(container);
 		container.setLayout(null);
 
 		container.removeAll();
 		AffichagePrincipale affichagePrincipale = new AffichagePrincipale();
-		affichagePrincipale.setBounds(0, 0, 1488, 791);
+		affichagePrincipale.setBounds(0, 0, 1488, 737);
 		container.add(affichagePrincipale);
 
 		JPanel footer = new JPanel();
-		footer.setBounds(6, 795, 1480, 52);
+		footer.setBounds(6, 770, 1480, 17);
 		getContentPane().add(footer);
 		footer.setLayout(null);
 		container.repaint();
