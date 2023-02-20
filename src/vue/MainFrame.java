@@ -38,7 +38,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1500, 1050);
+		setBounds(100, 100, 1500, 893);
 		getContentPane().setLayout(null);
 
 		JPanel header = new JPanel();
@@ -53,7 +53,7 @@ public class MainFrame extends JFrame {
 		header.add(btnNewButton);
 
 		JPanel container = new JPanel();
-		container.setBounds(6, 103, 1488, 785);
+		container.setBounds(6, 103, 1500, 680);
 		getContentPane().add(container);
 		container.setLayout(null);
 
@@ -63,7 +63,7 @@ public class MainFrame extends JFrame {
 		container.add(affichagePrincipale);
 
 		JPanel footer = new JPanel();
-		footer.setBounds(6, 900, 1480, 52);
+		footer.setBounds(6, 795, 1480, 52);
 		getContentPane().add(footer);
 		footer.setLayout(null);
 		container.repaint();

@@ -71,11 +71,11 @@ public class AffichagePrincipale extends JPanel {
 	 * Create the panel.
 	 */
 	public AffichagePrincipale() {
-		setBounds(10, 0, 1488, 785);
+		setBounds(10, 0, 1500, 680);
 		setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(6, 106, 832, 562);
+		scrollPane.setBounds(6, 106, 832, 422);
 		add(scrollPane);
 
 		table = new JTable();
@@ -140,7 +140,7 @@ public class AffichagePrincipale extends JPanel {
 		add(lblSearch);
 
 		JLabel lblNewLabel_date_debut = new JLabel("Date de début de location :  ");
-		lblNewLabel_date_debut.setLocation(16, 669);
+		lblNewLabel_date_debut.setLocation(16, 540);
 		lblNewLabel_date_debut.setSize(200, 42);
 		lblNewLabel_date_debut.setFont(new Font("Nanum Gothic", Font.PLAIN, 14));
 		add(lblNewLabel_date_debut);
@@ -151,12 +151,12 @@ public class AffichagePrincipale extends JPanel {
 		model.setSelected(true);
 		JDatePanelImpl datePanel = new JDatePanelImpl(model);
 		JDatePickerImpl dateDebutLoc = new JDatePickerImpl(datePanel);
-		dateDebutLoc.setLocation(206, 677);
+		dateDebutLoc.setLocation(206, 548);
 		dateDebutLoc.setSize(200, 34);
 		add(dateDebutLoc);
 
 		JLabel lblNewLabel_date_fin = new JLabel("Date de fin de location :  ");
-		lblNewLabel_date_fin.setLocation(37, 701);
+		lblNewLabel_date_fin.setLocation(37, 572);
 		lblNewLabel_date_fin.setSize(200, 42);
 		lblNewLabel_date_fin.setFont(new Font("Nanum Gothic", Font.PLAIN, 14));
 		add(lblNewLabel_date_fin);
@@ -166,7 +166,7 @@ public class AffichagePrincipale extends JPanel {
 		model2.setSelected(true);
 		JDatePanelImpl datePanel2 = new JDatePanelImpl(model2);
 		JDatePickerImpl dateFinLoc = new JDatePickerImpl(datePanel2);
-		dateFinLoc.setLocation(206, 709);
+		dateFinLoc.setLocation(206, 580);
 		dateFinLoc.setSize(200, 34);
 		add(dateFinLoc);
 
@@ -179,62 +179,62 @@ public class AffichagePrincipale extends JPanel {
 		JLabel lblNewLabel = new JLabel("Total (€) :");
 		lblNewLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(489, 689, 141, 31);
+		lblNewLabel.setBounds(487, 548, 141, 31);
 		add(lblNewLabel);
 
 		JLabel lblPrixLocation = new JLabel(String.valueOf(vehicules.get(0).getPrix()));
 		lblPrixLocation.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPrixLocation.setFont(new Font("Lucida Grande", Font.PLAIN, 30));
-		lblPrixLocation.setBounds(642, 680, 196, 49);
+		lblPrixLocation.setBounds(642, 540, 196, 49);
 		add(lblPrixLocation);
 
 		JButton btnNewButton = new JButton("Louer");
 
 		btnNewButton.setFont(new Font("SansSerif", Font.PLAIN, 30));
-		btnNewButton.setBounds(946, 687, 129, 34);
+		btnNewButton.setBounds(934, 622, 129, 34);
 		add(btnNewButton);
 
 		JLabel lblCardTitle = new JLabel(vehicules.get(0).getMarque() + " " + vehicules.get(0).getModele_vehicule());
 		lblCardTitle.setFont(new Font("SansSerif", Font.PLAIN, 35));
 		lblCardTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCardTitle.setBounds(908, 300, 558, 49);
+		lblCardTitle.setBounds(908, 287, 558, 49);
 		add(lblCardTitle);
 
 		JLabel lblCardLabelCarburant = new JLabel("");
 		lblCardLabelCarburant
 				.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/icones/Carburant.png")));
-		lblCardLabelCarburant.setBounds(946, 361, 51, 55);
+		lblCardLabelCarburant.setBounds(946, 333, 51, 55);
 		add(lblCardLabelCarburant);
 
 		JLabel lblCardLabelCouleur = new JLabel("");
 		lblCardLabelCouleur.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/icones/Couleur.png")));
-		lblCardLabelCouleur.setBounds(946, 443, 51, 55);
+		lblCardLabelCouleur.setBounds(946, 400, 51, 55);
 		add(lblCardLabelCouleur);
 
 		JLabel lblCardLabelOptions = new JLabel("");
 		lblCardLabelOptions.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/icones/Options.png")));
-		lblCardLabelOptions.setBounds(946, 521, 51, 55);
+		lblCardLabelOptions.setBounds(946, 467, 51, 55);
 		add(lblCardLabelOptions);
 
 		JLabel lblCardViewCarburant = new JLabel(vehicules.get(0).getCarburant());
 		lblCardViewCarburant.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		lblCardViewCarburant.setBounds(1031, 373, 374, 34);
+		lblCardViewCarburant.setBounds(1031, 345, 374, 34);
 		add(lblCardViewCarburant);
 
 		JLabel lblCardViewCouleur = new JLabel(vehicules.get(0).getCouleur());
 		lblCardViewCouleur.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		lblCardViewCouleur.setBounds(1031, 453, 374, 38);
+		lblCardViewCouleur.setBounds(1031, 410, 374, 38);
 		add(lblCardViewCouleur);
 
 		JLabel lblCardViewOptions = new JLabel(vehicules.get(0).getOptions());
 		lblCardViewOptions.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		lblCardViewOptions.setBounds(1031, 531, 374, 37);
+		lblCardViewOptions.setBounds(1031, 477, 374, 37);
 		add(lblCardViewOptions);
 
 		JLabel lblCardLabelDescription = new JLabel("");
 		lblCardLabelDescription
 				.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/icones/Description.png")));
-		lblCardLabelDescription.setBounds(946, 603, 51, 49);
+		lblCardLabelDescription.setBounds(946, 545, 51, 49);
 		add(lblCardLabelDescription);
 
 		JTextArea textAreaCardViewDescription = new JTextArea(vehicules.get(0).getDescription());
@@ -242,13 +242,13 @@ public class AffichagePrincipale extends JPanel {
 		textAreaCardViewDescription.setBackground(new Color(238, 238, 238));
 		textAreaCardViewDescription.setEditable(false);
 		textAreaCardViewDescription.setLineWrap(true);
-		textAreaCardViewDescription.setBounds(1032, 598, 373, 70);
+		textAreaCardViewDescription.setBounds(1032, 540, 373, 70);
 		add(textAreaCardViewDescription);
 		
 		JButton btnDeconnexion = new JButton("Déconnexion");
 
 		btnDeconnexion.setFont(new Font("SansSerif", Font.PLAIN, 30));
-		btnDeconnexion.setBounds(1175, 687, 230, 34);
+		btnDeconnexion.setBounds(1175, 622, 230, 34);
 		add(btnDeconnexion);
 
 		comboBoxCategorie.addActionListener(new ActionListener() {
