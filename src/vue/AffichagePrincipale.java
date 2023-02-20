@@ -5,6 +5,7 @@ import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -190,7 +191,7 @@ public class AffichagePrincipale extends JPanel {
 		JButton btnNewButton = new JButton("Louer");
 
 		btnNewButton.setFont(new Font("SansSerif", Font.PLAIN, 30));
-		btnNewButton.setBounds(1130, 687, 129, 34);
+		btnNewButton.setBounds(946, 687, 129, 34);
 		add(btnNewButton);
 
 		JLabel lblCardTitle = new JLabel(vehicules.get(0).getMarque() + " " + vehicules.get(0).getModele_vehicule());
@@ -243,6 +244,12 @@ public class AffichagePrincipale extends JPanel {
 		textAreaCardViewDescription.setLineWrap(true);
 		textAreaCardViewDescription.setBounds(1032, 598, 373, 70);
 		add(textAreaCardViewDescription);
+		
+		JButton btnDeconnexion = new JButton("Déconnexion");
+
+		btnDeconnexion.setFont(new Font("SansSerif", Font.PLAIN, 30));
+		btnDeconnexion.setBounds(1175, 687, 230, 34);
+		add(btnDeconnexion);
 
 		comboBoxCategorie.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -393,6 +400,14 @@ public class AffichagePrincipale extends JPanel {
 					vehiculesFiltered = vehiculesFilteredSearch;
 					table.setModel(listeVehicule(vehiculesFiltered));
 				}
+			}
+		});
+		
+		btnDeconnexion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UserDao.currentUser = null;
+				JOptionPane.showMessageDialog(null, "Vous êtes déconnecté(e).", null,
+						JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 	}
