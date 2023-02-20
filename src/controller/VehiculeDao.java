@@ -164,7 +164,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 		}
 		return null;
 	}
-  
+
 	public ArrayList<String> getImmatriculation() {
 		ArrayList<String> listimta = new ArrayList<>();
 		try {
@@ -180,20 +180,21 @@ public class VehiculeDao implements IDao<Vehicule> {
 		}
 		return null;
 	}
+
 	public int getIdImage(String chemin_in) {
-		 int imageid = -1;
+		int imageid = -1;
 		try {
 			sql = connect.prepareStatement("SELECT id_image FROM image WHERE chemin_image = ?");
-			 
+
 			sql.setString(1, chemin_in);
 			rs = sql.executeQuery();
-			System.out.println("je suis getId");	
+			System.out.println("je suis getId");
 			while (rs.next()) {
 				imageid = rs.getInt("id_image");
-				
-				System.out.println(imageid+" id image trouver ");
+
+				System.out.println(imageid + " id image trouver ");
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -228,8 +229,6 @@ public class VehiculeDao implements IDao<Vehicule> {
 		}
 		return false;
 	}
-
-
 
 	public Vehicule findByImmatriculation(String immatriculation) {
 		Vehicule vehicule = null;
