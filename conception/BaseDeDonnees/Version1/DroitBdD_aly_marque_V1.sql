@@ -7,7 +7,7 @@ create user 'agence'@'localhost' identified by 'agence';
 
 -- droit pour le client
 grant insert on agence_aly_marc.location to 'client'@'localhost';
-grant insert on  agence_aly_marc.facture to 'client'@'localhost';
+grant select,insert on  agence_aly_marc.facture to 'client'@'localhost';
 grant select on  agence_aly_marc.type_paiement to 'client'@'localhost';
 grant select on  agence_aly_marc.vehicule to 'client'@'localhost';
 grant select on agence_aly_marc.image to 'client'@'localhost';
