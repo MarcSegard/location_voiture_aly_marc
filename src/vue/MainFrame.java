@@ -3,6 +3,7 @@ package vue;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controller.UserDao;
+import myConnection.Connect;
 
 public class MainFrame extends JFrame {
 
@@ -46,7 +48,7 @@ public class MainFrame extends JFrame {
 		header.setBounds(6, 6, 1488, 72);
 		getContentPane().add(header);
 		header.setLayout(null);
-		
+
 		JLabel lblBanniere = new JLabel();
 		lblBanniere.setBounds(0, 6, 1488, 72);
 		lblBanniere.setIcon(new ImageIcon(MainFrame.class.getResource("/assets/icones/BanniereFigma6.png")));
@@ -86,6 +88,12 @@ public class MainFrame extends JFrame {
 						upVehi.setVisible(true);
 						UpdateCreatVehicule.nbrFenetre++;
 					}
+					try {
+						Connect.currentConnection.close();
+						Connect.currentConnection = Connect.getConnection(true);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
 
 				} else {
 					// gestion utilisateur pour la connection
@@ -97,8 +105,7 @@ public class MainFrame extends JFrame {
 						ModificationSuppressionUser modSupUser = new ModificationSuppressionUser();
 						modSupUser.setVisible(true);
 					}
-					
-					
+
 				}
 			}
 		});

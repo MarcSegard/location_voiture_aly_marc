@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import controller.UserDao;
 import controller.VehiculeDao;
 import model.Vehicule;
+import myConnection.Connect;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
 import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
 import net.sourceforge.jdatepicker.impl.UtilDateModel;
@@ -34,6 +35,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import java.awt.Color;
 import java.beans.PropertyChangeListener;
+import java.sql.SQLException;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -445,6 +447,14 @@ public class AffichagePrincipale extends JPanel {
 					JOptionPane.showMessageDialog(null, "Pour se déconnecter il faut d'abord être connecter", null,
 							JOptionPane.ERROR_MESSAGE);
 				} else {
+					if (UserDao.currentUser.getEmail().contains("@agence.fr")) {
+						try {
+							Connect.currentConnection.close();
+							Connect.currentConnection = Connect.getConnection(false);
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
+					}
 					UserDao.currentUser = null;
 					JOptionPane.showMessageDialog(null, "Vous êtes déconnecté(e).", null,
 							JOptionPane.INFORMATION_MESSAGE);

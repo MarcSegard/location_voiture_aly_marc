@@ -1,6 +1,6 @@
 package controller;
 
-import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,9 +12,6 @@ import myConnection.Connect;
 
 public class VehiculeDao implements IDao<Vehicule> {
 
-	// Il faudra faire attention à l'utilisateur ou agence pour la connection et les
-	// droits
-	Connection connect = Connect.getConnection();
 	PreparedStatement sql;
 	ResultSet rs;
 
@@ -22,7 +19,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 	public boolean create(Vehicule vehicule) {
 
 		try {
-			sql = connect.prepareStatement("{call addVehicule(?,?,?,?,?,?,?,?,?,now(),?,?,?)}");
+			sql = Connect.currentConnection.prepareStatement("{call addVehicule(?,?,?,?,?,?,?,?,?,now(),?,?,?)}");
 			sql.setString(1, vehicule.getAgence());
 			sql.setString(2, vehicule.getCategorie());
 			sql.setString(3, vehicule.getCarburant());
@@ -49,7 +46,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 	public ArrayList<Vehicule> read() {
 		ArrayList<Vehicule> vehicules = new ArrayList<>();
 		try {
-			sql = connect.prepareStatement("select * from liste_vehicule order by prix_vehicule");
+			sql = Connect.currentConnection.prepareStatement("select * from liste_vehicule order by prix_vehicule");
 			rs = sql.executeQuery();
 			Vehicule vehicule;
 
@@ -72,7 +69,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 	public ArrayList<String> getMarque() {
 		ArrayList<String> marques = new ArrayList<>();
 		try {
-			sql = connect.prepareStatement("select distinct nom_marque from marque");
+			sql = Connect.currentConnection.prepareStatement("select distinct nom_marque from marque");
 			rs = sql.executeQuery();
 
 			while (rs.next()) {
@@ -88,7 +85,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 	public ArrayList<String> getCategorie() {
 		ArrayList<String> categories = new ArrayList<>();
 		try {
-			sql = connect.prepareStatement("select distinct nom_categorie from categorie");
+			sql = Connect.currentConnection.prepareStatement("select distinct nom_categorie from categorie");
 			rs = sql.executeQuery();
 
 			while (rs.next()) {
@@ -104,7 +101,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 	public ArrayList<String> getMoyenPaiement() {
 		ArrayList<String> paiements = new ArrayList<>();
 		try {
-			sql = connect.prepareStatement("select distinct nom_type_paiement from type_paiement");
+			sql = Connect.currentConnection.prepareStatement("select distinct nom_type_paiement from type_paiement");
 			rs = sql.executeQuery();
 
 			while (rs.next()) {
@@ -120,7 +117,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 	public ArrayList<String> getCarburant() {
 		ArrayList<String> carburants = new ArrayList<>();
 		try {
-			sql = connect.prepareStatement("select distinct nom_carburant from carburant");
+			sql = Connect.currentConnection.prepareStatement("select distinct nom_carburant from carburant");
 			rs = sql.executeQuery();
 
 			while (rs.next()) {
@@ -136,7 +133,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 	public ArrayList<String> getModele() {
 		ArrayList<String> modeles = new ArrayList<>();
 		try {
-			sql = connect.prepareStatement("select distinct modele_vehicule from vehicule");
+			sql = Connect.currentConnection.prepareStatement("select distinct modele_vehicule from vehicule");
 			rs = sql.executeQuery();
 
 			while (rs.next()) {
@@ -152,7 +149,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 	public ArrayList<String> getCouleur() {
 		ArrayList<String> couleurs = new ArrayList<>();
 		try {
-			sql = connect.prepareStatement("select distinct couleur_vehicule from vehicule");
+			sql = Connect.currentConnection.prepareStatement("select distinct couleur_vehicule from vehicule");
 			rs = sql.executeQuery();
 
 			while (rs.next()) {
@@ -168,7 +165,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 	public ArrayList<String> getImmatriculation() {
 		ArrayList<String> listimta = new ArrayList<>();
 		try {
-			sql = connect.prepareStatement("select distinct immatriculation_vehicule from vehicule");
+			sql = Connect.currentConnection.prepareStatement("select distinct immatriculation_vehicule from vehicule");
 			rs = sql.executeQuery();
 
 			while (rs.next()) {
@@ -183,7 +180,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 
 	public boolean update(int id_image, Vehicule vehicule) {
 		try {
-			sql = connect.prepareStatement("{call updateVehicule(?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?)}");
+			sql = Connect.currentConnection.prepareStatement("{call updateVehicule(?,?,?,?,?,?,?, ?,?,?,?,?,?,?,?)}");
 			sql.setInt(1, vehicule.getId());
 			sql.setInt(2, id_image);
 			sql.setString(3, vehicule.getAgence());
@@ -213,7 +210,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 	public Vehicule findByImmatriculation(String immatriculation) {
 		Vehicule vehicule = null;
 		try {
-			sql = connect.prepareStatement("SELECT*FROM liste_vehicule WHERE immatriculation_vehicule = ?");
+			sql = Connect.currentConnection.prepareStatement("SELECT*FROM liste_vehicule WHERE immatriculation_vehicule = ?");
 			sql.setString(1, immatriculation);
 			rs = sql.executeQuery();
 			while (rs.next()) {
@@ -238,7 +235,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 		try {
 			int id_type_paiement = -1;
 			int id_facture = -1;
-			sql = connect.prepareStatement("SELECT id_type_paiement FROM type_paiement WHERE nom_type_paiement=?");
+			sql = Connect.currentConnection.prepareStatement("SELECT id_type_paiement FROM type_paiement WHERE nom_type_paiement=?");
 			sql.setString(1, type_paiement_in);
 			rs = sql.executeQuery();
 
@@ -248,7 +245,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 
 			if (id_type_paiement != -1) {
 				// Insertion facture
-				sql = connect.prepareStatement(
+				sql = Connect.currentConnection.prepareStatement(
 						"insert into facture (date_facture,montant_facture,id_type_paiement,token_paiement_facture)"
 								+ " values (now(),?,?, 'YUIBVFY87654EDF7UHGT')");
 				sql.setFloat(1, montant_facture_in);
@@ -256,7 +253,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 				sql.execute();
 
 				// Récupération de l'id de la facture crée
-				sql = connect.prepareStatement("select distinct LAST_INSERT_ID() as id from facture");
+				sql = Connect.currentConnection.prepareStatement("select distinct LAST_INSERT_ID() as id from facture");
 				rs = sql.executeQuery();
 
 				if (rs.next()) {
@@ -265,7 +262,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 
 				if (id_facture != -1) {
 					// insertion location
-					sql = connect.prepareStatement(
+					sql = Connect.currentConnection.prepareStatement(
 							"insert into location (id_client,id_vehicule,id_facture,date_debut_location, date_fin_location)"
 									+ " values (?,?,?,?,?)");
 					sql.setInt(1, id_client_in);
@@ -290,7 +287,7 @@ public class VehiculeDao implements IDao<Vehicule> {
 	public int getIdImage(String chemin_in) {
 		int imageid = -1;
 		try {
-			sql = connect.prepareStatement("SELECT id_image FROM image WHERE chemin_image = ?");
+			sql = Connect.currentConnection.prepareStatement("SELECT id_image FROM image WHERE chemin_image = ?");
 
 			sql.setString(1, chemin_in);
 			rs = sql.executeQuery();
