@@ -121,6 +121,12 @@ public class ImprimeVhculeShow extends JDialog {
 		});
 		btn_confirmation.setBounds(629, 357, 97, 39);
 		contentPanel.add(btn_confirmation);
+		
+		JLabel lblNewLabel = new JLabel("Modification  effectuer");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel.setBounds(10, 22, 200, 39);
+		contentPanel.add(lblNewLabel);
 
 	}
 }
