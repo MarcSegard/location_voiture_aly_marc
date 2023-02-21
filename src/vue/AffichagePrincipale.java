@@ -189,10 +189,12 @@ public class AffichagePrincipale extends JPanel {
 		lblPrixLocation.setBounds(642, 540, 196, 49);
 		add(lblPrixLocation);
 
-		JButton btnNewButton = new JButton("Louer");
+		JButton btnNewButton = new JButton("");
+		btnNewButton.setToolTipText("Confirmer et payer la location");
+		btnNewButton.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/icones/rent.png")));
 
 		btnNewButton.setFont(new Font("SansSerif", Font.PLAIN, 30));
-		btnNewButton.setBounds(934, 622, 129, 34);
+		btnNewButton.setBounds(1069, 610, 64, 64);
 		add(btnNewButton);
 
 		JLabel lblCardTitle = new JLabel(vehicules.get(0).getMarque() + " " + vehicules.get(0).getModele_vehicule());
@@ -246,10 +248,12 @@ public class AffichagePrincipale extends JPanel {
 		textAreaCardViewDescription.setBounds(1032, 540, 373, 70);
 		add(textAreaCardViewDescription);
 
-		JButton btnDeconnexion = new JButton("Déconnexion");
+		JButton btnDeconnexion = new JButton("");
+		btnDeconnexion.setToolTipText("Déconnexion");
+		btnDeconnexion.setIcon(new ImageIcon(AffichagePrincipale.class.getResource("/assets/icones/Deconnexion.png")));
 
 		btnDeconnexion.setFont(new Font("SansSerif", Font.PLAIN, 30));
-		btnDeconnexion.setBounds(1175, 622, 230, 34);
+		btnDeconnexion.setBounds(1218, 610, 64, 64);
 		add(btnDeconnexion);
 
 		comboBoxCategorie.addActionListener(new ActionListener() {
