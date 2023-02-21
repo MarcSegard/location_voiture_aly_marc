@@ -29,7 +29,7 @@ public class ImprimeVhculeShow extends JDialog {
 	public ImprimeVhculeShow(Vehicule vehicule, String img) {
 		setResizable(false);
 		setBounds(500, 90, 771, 450);
-		setTitle("Recapitulatif de Synthèse");
+		setTitle("Récapitulatif de Synthèse");
 		getContentPane().setLayout(null);
 
 		JLabel lbl_img_Vehicule = new JLabel();
@@ -37,47 +37,11 @@ public class ImprimeVhculeShow extends JDialog {
 		lbl_img_Vehicule.setBounds(230, 10, 518, 250);
 		getContentPane().add(lbl_img_Vehicule);
 
-		JLabel lbl_imp_categ = new JLabel("Categorie : " + vehicule.getCarburant().toString());
-		lbl_imp_categ.setBounds(10, 115, 168, 30);
-		lbl_imp_categ.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_imp_categ.setFont(new Font("Tahoma", Font.BOLD, 14));
-		getContentPane().add(lbl_imp_categ);
-
 		JLabel lbl_imp_carbu = new JLabel("Carburant : " + vehicule.getCarburant().toString());
 		lbl_imp_carbu.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_imp_carbu.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbl_imp_carbu.setBounds(10, 310, 188, 30);
 		getContentPane().add(lbl_imp_carbu);
-
-		JLabel lbl_imp_couleur = new JLabel("Couleur : " + vehicule.getCouleur().toString());
-		lbl_imp_couleur.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_imp_couleur.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lbl_imp_couleur.setBounds(440, 260, 188, 30);
-		getContentPane().add(lbl_imp_couleur);
-
-		JLabel lbl_imp_model = new JLabel("Modele : " + vehicule.getModele_vehicule().toString());
-		lbl_imp_model.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_imp_model.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lbl_imp_model.setBounds(10, 260, 168, 30);
-		getContentPane().add(lbl_imp_model);
-
-		JLabel lbl_imp_marque = new JLabel("Marque : " + vehicule.getMarque().toString());
-		lbl_imp_marque.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_imp_marque.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lbl_imp_marque.setBounds(10, 162, 168, 30);
-		getContentPane().add(lbl_imp_marque);
-
-		JLabel lbl_imp_matricule = new JLabel("Immatricule : " + vehicule.getImmatriculation().toString());
-		lbl_imp_matricule.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_imp_matricule.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lbl_imp_matricule.setBounds(10, 202, 188, 30);
-		getContentPane().add(lbl_imp_matricule);
-
-		JLabel lbl_imp_kilometage = new JLabel("Kilometrage : " + vehicule.getKilometrage());
-		lbl_imp_kilometage.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_imp_kilometage.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lbl_imp_kilometage.setBounds(230, 260, 168, 30);
-		getContentPane().add(lbl_imp_kilometage);
 
 		JLabel lbl_imp_description = new JLabel("Description ;" + vehicule.getDescription().toString());
 		lbl_imp_description.setHorizontalAlignment(SwingConstants.CENTER);
@@ -91,11 +55,54 @@ public class ImprimeVhculeShow extends JDialog {
 		lbl_imp_option.setBounds(230, 310, 398, 30);
 		getContentPane().add(lbl_imp_option);
 
-		JLabel lbl_imp_prix = new JLabel("Prix : " + vehicule.getPrix());
+		JLabel lbl_imp_prix = new JLabel("Prix : " + vehicule.getPrix()+" €");
 		lbl_imp_prix.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_imp_prix.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbl_imp_prix.setBounds(664, 310, 84, 30);
 		getContentPane().add(lbl_imp_prix);
+		
+		JLabel lbl_icone = new JLabel("");
+		lbl_icone
+				.setIcon(new ImageIcon(ImprimeVhculeShow.class.getResource("/assets/icones/transferserviceblack.png")));
+		lbl_icone.setBounds(20, 21, 152, 100);
+		contentPanel.add(lbl_icone);
+
+		JLabel lbl_imp_model = new JLabel("Modèle : " + vehicule.getModele_vehicule().toString());
+		lbl_imp_model.setBounds(10, 225, 168, 30);
+		contentPanel.add(lbl_imp_model);
+		lbl_imp_model.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_imp_model.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		JLabel lbl_imp_matricule = new JLabel(" Numéro Immatricule : " + vehicule.getImmatriculation().toString());
+		lbl_imp_matricule.setBounds(10, 265, 188, 30);
+		contentPanel.add(lbl_imp_matricule);
+		lbl_imp_matricule.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_imp_matricule.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		JLabel lbl_imp_kilometage = new JLabel("Kilométrage : " + vehicule.getKilometrage());
+		lbl_imp_kilometage.setBounds(230, 265, 168, 30);
+		contentPanel.add(lbl_imp_kilometage);
+		lbl_imp_kilometage.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_imp_kilometage.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		JLabel lbl_imp_couleur = new JLabel("Couleur : " + vehicule.getCouleur().toString());
+		lbl_imp_couleur.setBounds(443, 265, 188, 30);
+		contentPanel.add(lbl_imp_couleur);
+		lbl_imp_couleur.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_imp_couleur.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		JLabel lbl_imp_marque = new JLabel("Marque : " + vehicule.getMarque().toString());
+		lbl_imp_marque.setBounds(10, 185, 168, 30);
+		contentPanel.add(lbl_imp_marque);
+		lbl_imp_marque.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_imp_marque.setFont(new Font("Tahoma", Font.BOLD, 14));
+
+		JLabel lbl_imp_categ = new JLabel("Catégorie : " + vehicule.getCarburant().toString());
+		lbl_imp_categ.setBounds(10, 145, 168, 30);
+		contentPanel.add(lbl_imp_categ);
+		lbl_imp_categ.setHorizontalAlignment(SwingConstants.CENTER);
+		lbl_imp_categ.setFont(new Font("Tahoma", Font.BOLD, 14));
+
 
 		if (img == null) {
 			lbl_img_Vehicule.setIcon(
@@ -112,7 +119,7 @@ public class ImprimeVhculeShow extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JButton btn_confirmation = new JButton(" Je Valide");
+		JButton btn_confirmation = new JButton(" Je Valide la modification");
 		btn_confirmation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				nbrFen = 0;
@@ -121,12 +128,7 @@ public class ImprimeVhculeShow extends JDialog {
 		});
 		btn_confirmation.setBounds(629, 357, 97, 39);
 		contentPanel.add(btn_confirmation);
-		
-		JLabel lblNewLabel = new JLabel("Modification  effectuer");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNewLabel.setBounds(10, 22, 200, 39);
-		contentPanel.add(lblNewLabel);
 
+		
 	}
 }
