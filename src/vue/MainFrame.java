@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -45,11 +46,16 @@ public class MainFrame extends JFrame {
 		header.setBounds(6, 6, 1488, 72);
 		getContentPane().add(header);
 		header.setLayout(null);
+		
+		JLabel lblBanniere = new JLabel();
+		lblBanniere.setBounds(0, 6, 1488, 72);
+		lblBanniere.setIcon(new ImageIcon(MainFrame.class.getResource("/assets/icones/BanniereFigma6.png")));
+		header.add(lblBanniere);
 
 		JButton btnNewButton = new JButton("");
 		btnNewButton.setIcon(new ImageIcon(MainFrame.class.getResource("/assets/icones/login.png")));
 
-		btnNewButton.setBounds(1389, 6, 76, 60);
+		btnNewButton.setBounds(1389, 10, 76, 60);
 		header.add(btnNewButton);
 
 		JPanel container = new JPanel();
