@@ -357,8 +357,17 @@ public class UpdateCreatVehicule extends JFrame {
 							JOptionPane.showMessageDialog(null, "Impossible!! Probleme id image.  ", null,
 									JOptionPane.ERROR_MESSAGE);
 						} else {
-							vehiculeDao.update(idImage, imat);
-							System.out.println("id vehicule " + imat.getId());
+
+							boolean test = vehiculeDao.update(idImage, imat);
+							System.out.println(test);
+
+							if (test) {
+								// System.out.println("id vehicule " + imat.getId());
+								JOptionPane.showMessageDialog(null, "Mise a jours Vehicule a bien été effectuer.");
+							} else {
+
+								JOptionPane.showMessageDialog(null, "inserte non  ok.");
+							}
 						}
 					}
 					// Mise à jour données dans le composant AffichagePrincipale
