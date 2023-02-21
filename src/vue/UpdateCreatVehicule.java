@@ -50,6 +50,7 @@ public class UpdateCreatVehicule extends JFrame {
 	private JTextField Prix_unitaire_input;
 	private JTextField Immatriculation_input;
 	private JTextField input_option;
+	private boolean categorieIsSelected = false;
 
 	/**
 	 * Create the frame.
@@ -78,6 +79,7 @@ public class UpdateCreatVehicule extends JFrame {
 		String[] categorieToCombo = categories.toArray(new String[categories.size()]);
 
 		JComboBox comboBox_categorie = new JComboBox(categorieToCombo);
+
 		comboBox_categorie.setBounds(10, 279, 195, 21);
 		contentPane.add(comboBox_categorie);
 		//
@@ -296,7 +298,6 @@ public class UpdateCreatVehicule extends JFrame {
 
 				} else {
 					if (comboBox_imat_shearch.getSelectedIndex() == 0) {
-
 						Vehicule vehi = new Vehicule(couleur_input.getText(),
 								Float.parseFloat(Prix_unitaire_input.getText().toString()),
 								Immatriculation_input.getText().toString(), Descript_input.getText(),
@@ -316,7 +317,7 @@ public class UpdateCreatVehicule extends JFrame {
 
 						if (vehiculeDao.create(vehi)) {
 							if (vhculeShow.nbrFen == 0) {
-								//JOptionPane.showMessageDialog(null, "Bravo, Vehicule a bien été créé.");
+								// JOptionPane.showMessageDialog(null, "Bravo, Vehicule a bien été créé.");
 								vhculeShow = new ImprimeVhculeShow(vehi, imgRetour);
 								vhculeShow.setVisible(true);
 								btn_create.setEnabled(false);
@@ -371,27 +372,39 @@ public class UpdateCreatVehicule extends JFrame {
 		lbl_vehicule_view.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JFileChooser file = new JFileChooser();
-				file.showOpenDialog(file);
-				//
-				// RECUPERATION DU FILCHIER SELECTIONNER
-				File fileSelected = file.getSelectedFile();
-				String chemin = fileSelected.getAbsolutePath();
-				System.out.println("chemin*****" + chemin);
-				String destination = "src/assets/images/" + comboBox_categorie.getSelectedItem().toString() + "/"
-						+ file.getSelectedFile().getName();
-				File source = new File(chemin);
-				File destinationFinal = new File(destination);
-				tempo = destination.substring(destination.indexOf("/")).trim();
-				System.out.println(destination.substring(destination.indexOf("/")));
-				try {
-					Files.copy(source.toPath(), destinationFinal.toPath());
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				if (categorieIsSelected == true) {
+					JFileChooser file = new JFileChooser();
+					file.showOpenDialog(file);
+					//
+					// RECUPERATION DU FILCHIER SELECTIONNER
+					File fileSelected = file.getSelectedFile();
+					String chemin = fileSelected.getAbsolutePath();
+					System.out.println("chemin*****" + chemin);
+					String destination = "src/assets/images/" + comboBox_categorie.getSelectedItem().toString() + "/"
+							+ file.getSelectedFile().getName();
+					File source = new File(chemin);
+					File destinationFinal = new File(destination);
+					System.out.println("tempo : " + tempo);
+					tempo = destination.substring(destination.indexOf("/")).trim();
+					System.out.println(destination.substring(destination.indexOf("/")));
+					try {
+						Files.copy(source.toPath(), destinationFinal.toPath());
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					imgRetour = chemin.replace("/\\/g", "\\\\");
+					lbl_vehicule_view.setIcon(new ImageIcon(new ImageIcon(imgRetour).getImage().getScaledInstance(400,
+							250, java.awt.Image.SCALE_SMOOTH)));
+				}else {
+					JOptionPane.showMessageDialog(null, "Veuillez choissir votre catégorie d'abord ", null,
+							JOptionPane.ERROR_MESSAGE);
 				}
-				imgRetour = chemin.replace("/\\/g", "\\\\");
-				lbl_vehicule_view.setIcon(new ImageIcon(
-						new ImageIcon(imgRetour).getImage().getScaledInstance(400, 250, java.awt.Image.SCALE_SMOOTH)));
+			}
+		});
+
+		comboBox_categorie.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				categorieIsSelected = true;
 			}
 		});
 	}
