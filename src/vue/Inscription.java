@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -84,6 +85,13 @@ public class Inscription extends JFrame {
 				User userlogin = uc1.userLogin(inputEmailConnection.getText(),
 						String.valueOf(inputPasswordConnection.getPassword()));
 				if (userlogin != null) {
+					if (UserDao.currentUser.getEmail().contains("@agence.fr")) {
+						MainFrame.btnNewButton
+								.setIcon(new ImageIcon(MainFrame.class.getResource("/assets/icones/car-repair.png")));
+					} else {
+						MainFrame.btnNewButton
+								.setIcon(new ImageIcon(MainFrame.class.getResource("/assets/icones/Parameter.png")));
+					}
 					JOptionPane.showMessageDialog(null, "Bonjour " + userlogin.getPrenom() + ", vous êtes connecté",
 							"Super", JOptionPane.INFORMATION_MESSAGE);
 					dispose();
@@ -194,6 +202,13 @@ public class Inscription extends JFrame {
 						JOptionPane.showMessageDialog(null, "L'utilisateur a bien été créé", "Bravo",
 								JOptionPane.INFORMATION_MESSAGE);
 						UserDao.currentUser = user1;
+						if (UserDao.currentUser.getEmail().contains("@agence.fr")) {
+							MainFrame.btnNewButton.setIcon(
+									new ImageIcon(MainFrame.class.getResource("/assets/icones/car-repair.png")));
+						} else {
+							MainFrame.btnNewButton.setIcon(
+									new ImageIcon(MainFrame.class.getResource("/assets/icones/Parameter.png")));
+						}
 						dispose();
 
 					} else {
