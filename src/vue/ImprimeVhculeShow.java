@@ -60,12 +60,16 @@ public class ImprimeVhculeShow extends JDialog {
 		lbl_imp_prix.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lbl_imp_prix.setBounds(664, 310, 84, 30);
 		getContentPane().add(lbl_imp_prix);
-		
 		JLabel lbl_icone = new JLabel("");
+		lbl_icone.setIcon(new ImageIcon(ImprimeVhculeShow.class.getResource("/assets/icones/black.png")));
+		lbl_icone.setBounds(10, 27, 168, 107);
+		contentPanel.add(lbl_icone);
+
+		/*JLabel lbl_icone = new JLabel("");
 		lbl_icone
 				.setIcon(new ImageIcon(ImprimeVhculeShow.class.getResource("/assets/icones/transferserviceblack.png")));
 		lbl_icone.setBounds(20, 21, 152, 100);
-		contentPanel.add(lbl_icone);
+		contentPanel.add(lbl_icone);*/
 
 		JLabel lbl_imp_model = new JLabel("Modèle : " + vehicule.getModele_vehicule().toString());
 		lbl_imp_model.setBounds(10, 225, 168, 30);
@@ -128,7 +132,8 @@ public class ImprimeVhculeShow extends JDialog {
 		});
 		btn_confirmation.setBounds(629, 357, 97, 39);
 		contentPanel.add(btn_confirmation);
-
+		
+		
 		
 	}
 }
