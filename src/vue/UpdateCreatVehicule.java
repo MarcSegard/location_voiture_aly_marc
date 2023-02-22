@@ -338,7 +338,6 @@ public class UpdateCreatVehicule extends JFrame {
 						}
 
 					} else {
-						JOptionPane.showMessageDialog(null, "Mise a jours Vehicule a bien été effectuer.");
 						imat.setCouleur(couleur_input.getText());
 						imat.setPrix(Float.parseFloat(Prix_unitaire_input.getText().toString()));
 						imat.setImmatriculation(Immatriculation_input.getText().toString());

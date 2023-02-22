@@ -456,6 +456,7 @@ public class AffichagePrincipale extends JPanel {
 						}
 					}
 					UserDao.currentUser = null;
+					MainFrame.btnNewButton.setIcon(new ImageIcon(MainFrame.class.getResource("/assets/icones/login.png")));
 					JOptionPane.showMessageDialog(null, "Vous êtes déconnecté(e).", null,
 							JOptionPane.INFORMATION_MESSAGE);
 				}

@@ -18,6 +18,8 @@ import myConnection.Connect;
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	
+	static JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -51,12 +53,11 @@ public class MainFrame extends JFrame {
 
 		JLabel lblBanniere = new JLabel();
 		lblBanniere.setBounds(0, 6, 1488, 72);
-		lblBanniere.setIcon(new ImageIcon(MainFrame.class.getResource("/assets/icones/BanniereFigma6.png")));
+		lblBanniere.setIcon(new ImageIcon(MainFrame.class.getResource("/assets/icones/BanniereFigma11.png")));
 		header.add(lblBanniere);
 
-		JButton btnNewButton = new JButton("");
+		btnNewButton = new JButton("");
 		btnNewButton.setIcon(new ImageIcon(MainFrame.class.getResource("/assets/icones/login.png")));
-
 		btnNewButton.setBounds(1389, 10, 76, 60);
 		header.add(btnNewButton);
 
