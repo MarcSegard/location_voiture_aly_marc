@@ -16,22 +16,49 @@ import java.awt.Font;
 import java.text.DateFormat;
 
 import javax.swing.SwingConstants;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import javax.swing.JButton;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class ShowLocation extends JDialog {
 	private VehiculeDao vehiculeDao = new VehiculeDao();
@@ -150,7 +177,8 @@ public class ShowLocation extends JDialog {
 						comboBoxTypePaiement.getSelectedItem().toString(), Float.parseFloat(montant.replace(",", ".")),
 						start, end)) {
 					System.out.println("Insertion facture Ok");
-					sendEmail(UserDao.currentUser.getEmail(), vehicule, nbreJours, start, end, montant);
+					String cheminVerPDF = createPDf(vehicule, nbreJours, start, end, montant);
+					sendEmail(UserDao.currentUser.getEmail(), cheminVerPDF);
 					dispose();
 				} else {
 					System.out.println("Insertion Nok !!!");
@@ -164,7 +192,54 @@ public class ShowLocation extends JDialog {
 		System.out.println("id_vehicule : " + vehicule.getId());
 	}
 
-	private void sendEmail(String email, Vehicule vehicule, int nbreJours, Date start, Date end, String montant) {
+	private String createPDf(Vehicule vehicule, int nbreJours, Date start, Date end, String montant) {
+		com.itextpdf.text.Font fontHeader = FontFactory.getFont(FontFactory.COURIER, 24, BaseColor.BLACK);
+		com.itextpdf.text.Font font = FontFactory.getFont(FontFactory.COURIER, 16, BaseColor.BLACK);
+		
+		String cheminVersPDF = "./Facture.pdf";
+		
+		try {
+			Document document = new Document();
+			PdfWriter.getInstance(document, new FileOutputStream(cheminVersPDF ));
+			document.open();
+			Paragraph p1 = new Paragraph();
+			p1.add("Bonjour M. " + UserDao.currentUser.getNom());
+			p1.setFont(fontHeader);
+			document.add(p1);
+			Paragraph p2 = new Paragraph();
+			p2.add("Votre véhicule :  " + vehicule.getMarque() + " " + vehicule.getModele_vehicule());
+			p2.setFont(font);
+			document.add(p2);
+			Paragraph p3 = new Paragraph();
+			p3.add("a été réservé ");
+			p3.setFont(font);
+			document.add(p3);
+			Paragraph p4 = new Paragraph();
+			p4.add("du :  " + formatD.format(start) + " au " + formatD.format(end) + "("+nbreJours+" jours)");
+			p4.setFont(font);
+			document.add(p4);
+			Paragraph p5 = new Paragraph();
+			p5.add("pour un montant de "+ montant+ "€");
+			p5.setFont(fontHeader);
+			document.add(p5);
+			Paragraph p6 = new Paragraph();
+			p6.add("L'agence AVIS vous remercie pour votre confiance");
+			p6.setFont(fontHeader);
+			document.add(p6);
+			document.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return cheminVersPDF;
+
+	}
+
+	private void sendEmail(String email, String cheminVersPDF) {
 
 		System.out.println("email : " + email);
 
@@ -191,7 +266,7 @@ public class ShowLocation extends JDialog {
 
 			protected PasswordAuthentication getPasswordAuthentication() {
 
-				return new PasswordAuthentication("segardmarc", "oscjava"); // mettre son mot de passe
+				return new PasswordAuthentication("segardmarc", "Fabquetho1234!"); // mettre son mot de passe
 
 			}
 
@@ -212,11 +287,31 @@ public class ShowLocation extends JDialog {
 
 			// Set Subject: header field
 			message.setSubject("Confirmation réservation");
+			
+            Multipart multipart = new MimeMultipart();
+
+            MimeBodyPart attachmentPart = new MimeBodyPart();
+
+            MimeBodyPart textPart = new MimeBodyPart();
+            
+            try {
+
+                File f =new File(cheminVersPDF);
+
+                attachmentPart.attachFile(f);
+                textPart.setText("Votre véhicule   a bien été réservé\n\nL'agence AVIS vous remercie de votre confiance");
+                multipart.addBodyPart(textPart);
+                multipart.addBodyPart(attachmentPart);
+
+            } catch (IOException e) {
+
+                e.printStackTrace();
+
+            }
+            
+            message.setContent(multipart);
 
 			// Now set the actual message
-			message.setText("Votre véhicule  " + vehicule.getMarque() + " " + vehicule.getModele_vehicule() + " a bien été réservé du " + formatD.format(start) + " au " + formatD.format(end) +
-					" ("+nbreJours+ " jours) pour un montant de " + montant + "€\n\nL'agence AVIS vous remercie de votre confiance");
-
 
 			System.out.println("sending...");
 			// Send message
